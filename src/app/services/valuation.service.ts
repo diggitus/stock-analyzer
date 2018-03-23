@@ -10,7 +10,7 @@ import { BaseService } from 'app/services/base.service';
 import { Observable } from 'rxjs/Observable';
 
 /**
- * Base service.
+ * Valuation service.
  */
 @Injectable()
 export class ValuationService extends BaseService {
@@ -21,12 +21,19 @@ export class ValuationService extends BaseService {
     private url1 = 'http://financials.morningstar.com/valuate/current-valuation-list.action?&t=XETR:ads&region=usa&culture=en-US';
     private url2 = 'http://financials.morningstar.com/valuate/valuation-history.action?&t=XETR:ads&region="&G46&"&culture=en-US&cur=&type=price-earnings';
 
+    /**
+     * Constructor
+     */
     constructor(
         private http: HttpClient
     ) {
         super();
     }
 
+    /**
+     * Returns valuation list.
+     * @param searchRequest The search request.
+     */
     getValuationList(searchRequest: SearchRequest): Observable<Valuation> {
         const url = `${this.baseUrl}/${this.valuationList}?` +
             `&t=${searchRequest.stockExchange}:${searchRequest.symbol}` +
@@ -42,6 +49,10 @@ export class ValuationService extends BaseService {
             });
     }
 
+    /**
+     * Parses valuation list.
+     * @param resp The get response.
+     */
     private parseValuation(resp: string) {
         const valuation = new Valuation();
         const parser = new DOMParser();
@@ -57,6 +68,11 @@ export class ValuationService extends BaseService {
         return valuation;
     }
 
+    /**
+     * Returns table row value or -1.
+     * @param tableRows HTML table rows from HTTP response.
+     * @param label The label in the table row.
+     */
     private getValue(tableRows: NodeListOf<Element>, label: string): number {
         if (!tableRows) {
             return -1;

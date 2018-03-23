@@ -1,6 +1,9 @@
-<h1>
-    {{title}}
-</h1>
-<p [innerHTML]="output">
-</p>
+<ng-container *ngIf="valuation">
+    <div>priceEarnings: {{ valuation.priceEarnings }}</div>
+    <div>priceBook: {{ valuation.priceBook }}</div>
+    <div>priceCashFlow: {{ valuation.priceCashFlow }}</div>
+    <div>priceSales: {{ valuation.priceSales }}</div>
+    <div>dividendYield: {{ valuation.dividendYield }}</div>
+</ng-container>
+
 <router-outlet></router-outlet>

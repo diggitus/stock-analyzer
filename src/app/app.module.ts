@@ -5,7 +5,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { FinancialsService } from './services/financials.service';
+import { ValuationService } from './services/valuation.service';
 
 @NgModule({
     declarations: [
@@ -18,7 +18,7 @@ import { FinancialsService } from './services/financials.service';
         AppRoutingModule
     ],
     providers: [
-        FinancialsService
+        ValuationService
     ],
     bootstrap: [AppComponent]
 })

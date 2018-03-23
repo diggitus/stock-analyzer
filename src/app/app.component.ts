@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import { FinancialsService } from 'app/services/financials.service';
+import { SearchRequest } from 'app/model/searchRequest';
+import { Valuation } from 'app/model/valuation';
+import { ValuationService } from 'app/services/valuation.service';
 
 @Component({
     selector: 'app-root',
@@ -7,11 +9,12 @@ import { FinancialsService } from 'app/services/financials.service';
     styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-    title = 'app works!';
 
-    output = '';
+    valuation: Valuation;
 
-    constructor(private financialsService: FinancialsService) {
-        this.financialsService.get().subscribe(resp => this.output = resp);
+    constructor(private valuationService: ValuationService) {
+        const searchRequest: SearchRequest = new SearchRequest();
+        searchRequest.symbol = 'ads';
+        this.valuationService.getValuationList(searchRequest).subscribe(valuationResp => this.valuation = valuationResp);
     }
 }

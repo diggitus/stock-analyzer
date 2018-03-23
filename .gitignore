@@ -32,6 +32,13 @@
 npm-debug.log
 testem.log
 /typings
+.angulardoc.json
+e2e-xunit.xml
+/doc
+/test-reports
+
+# jasmine
+jasminetest.xml
 
 # e2e
 /e2e/*.js

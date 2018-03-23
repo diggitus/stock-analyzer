@@ -1,0 +1,28 @@
+@import '../../../assets/scss/variables.scss';
+
+section {
+    display: flex;
+    height: 100%;
+    min-height: 250px;
+    align-items: center;
+    align-content: stretch;
+    justify-content: center;
+}
+
+.error__container {
+    text-align: center;
+}
+
+.error__message__container {
+    padding: 0 100px 100px 100px;
+}
+
+.back__button {
+    font-size: 12px;
+    padding: 0;
+}
+
+.error__sign {
+    font-size: 150px;
+    color: $daimler-gray-light;
+}

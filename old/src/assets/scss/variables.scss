@@ -1,0 +1,65 @@
+/************************************************
+
+  EMIL variables
+
+************************************************/
+
+// Small tablets and large smartphones (landscape view)
+$screen-sm-min: 576px;
+// Small tablets (portrait view)
+$screen-md-min: 768px;
+// Tablets and small desktops
+$screen-lg-min: 992px;
+// Large tablets and desktops
+$screen-xl-min: 1200px;
+// Large desktops
+$screen-xxl-min: 1550px;
+/*
+ * Colors
+ */
+$daimler-black: #000000;
+$daimler-gray-darker: #444444;
+$daimler-gray-dark: #707070;
+$daimler-gray: #9e9e9e;
+$daimler-gray-light: #c8c8c8;
+$daimler-gray-lighter: #e6e6e6;
+$daimler-gray-background: #f9f9f9;
+$daimler-white: #ffffff;
+$daimler-blue: #00677f;
+$daimler-blue-hover: #003e4c;
+$daimler-green: #6ea046;
+$daimler-orange: #e69123;
+$daimler-red: #ff0000;
+$emil-blue-lighter: #ffffff;
+$emil-blue-light: #ffffff;
+$emil-blue: #00677f;
+$emil-highlighter: #f9f9f9;
+
+
+/*** Success **/
+
+$daimler-success-primary-bg: #6ea046;
+$daimler-success-primary-border: #6f8e3e;
+$daimler-success-secondary-bg: #c8dcb4;
+$daimler-success-secondary-border: #c3d4a3;
+
+/*** Info ***/
+
+$daimler-info-primary-bg: #00677f;
+$daimler-info-primary-border: #00595b;
+$daimler-info-secondary-bg: #a6cad8;
+$daimler-info-secondary-border: #8dc6cd;
+
+/*** Error ***/
+
+$daimler-error-primary-bg: #ff0000;
+$daimler-error-primary-border: #e60026;
+$daimler-error-secondary-bg: #e6d2d2;
+$daimler-error-secondary-border: #ddc2c6;
+
+/*** Highlighting ***/
+$daimler-highlighting-0: rgba(80, 151, 171, .6);
+$daimler-highlighting-1: rgba(121, 174, 191, .6);
+$daimler-highlighting-2: rgba(166, 202, 216, .6);
+$daimler-highlighting-3: rgba(112, 112, 112, .6);
+$daimler-highlighting-4: rgba(158, 158, 158, .6);

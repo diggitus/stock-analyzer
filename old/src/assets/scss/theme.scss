@@ -1,0 +1,143 @@
+/************************************************
+
+  EMIL PrimeNG Theme styles
+
+************************************************/
+@import 'variables';
+$fontFamily: 'CorpoS', Arial, Helvetica, sans-serif;
+$fontSize: 1em;
+$borderRadius: 6px;
+$disabledOpacity: .35;
+
+//Header
+$headerBorderWidth: 1px;
+$headerBorderColor: #aed0ea;
+$headerBgColor: #deedf7;
+$headerTextColor: #222222;
+$headerFontWeight: bold;
+$headerIconTextColor: #222222;
+
+//Content
+$contentBorderWidth: 1px;
+$contentBorderColor: #dddddd;
+$contentBgColor: #f2f5f7;
+$contentTextColor: #362b36;
+
+//Default State
+$stateDefaultBorderWidth: 1px;
+$stateDefaultBorderColor: #aed0ea;
+$stateDefaultBgColor: #d7ebf9;
+$stateDefaultTextColor: #2779aa;
+
+//Active State
+$stateActiveBorderColor: #2694e8;
+$stateActiveBgColor: #3baae3;
+$stateActiveTextColor: #ffffff;
+
+//Highlight State
+$stateHighlightBorderColor: #f9dd34;
+$stateHighlightBgColor: #ffef8f;
+$stateHighlightTextColor: #363636;
+
+//Focus State
+$stateFocusBorderColor: #74b2e2;
+$stateFocusBgColor: #e4f1fb;
+$stateFocusTextColor: #0070a3;
+
+//Error State
+$stateErrorBorderColor: #e3d0cf;
+$stateErrorBgColor: #e3d0cf;
+$stateErrorTextColor: #ffffff;
+
+//Hover State
+$stateHoverBorderColor: #74b2e2;
+$stateHoverBgColor: #e4f1fb;
+$stateHoverTextColor: #0070a3;
+
+//Forms
+$inputBgColor: #ffffff;
+$inputTextColor: #222222;
+$invalidInputBorderColor: #cd0a0a;
+$inputGroupTextColor: #2779aa;
+
+@import 'node_modules/primeng/resources/themes/theme';
+
+.fa {
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    line-height: 1;
+    text-transform: none;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-size: 14px;
+
+    &.fa-2x {
+        font-size: 28px;
+    }
+
+    &.fa-check {
+        font-family: 'Glyphicons Halflings';
+
+        &::before {
+            content: '\E084';
+        }
+    }
+
+    &.fa-info-circle {
+        font-family: 'Glyphicons Halflings';
+
+        &::before {
+            content: '\E086';
+        }
+    }
+
+    &.fa-close {
+        font-family: 'Glyphicons Halflings';
+
+        &::before {
+            content: '\E083';
+        }
+    }
+}
+
+.ui-growl {
+    @media screen and (max-width: $screen-md-min - 1) {
+        top: 16px;
+        width: 17em;
+    }
+}
+
+.ui-growl-icon-close {
+    display: none;
+}
+
+.ui-growl-message-success {
+    color: $daimler-black;
+    background-color: $daimler-success-secondary-bg;
+    border-color: $daimler-success-secondary-border;
+}
+
+.ui-growl-message-info {
+    color: $daimler-black;
+    background-color: $daimler-info-secondary-bg;
+    border-color: $daimler-info-secondary-border;
+}
+
+.ui-growl-message-error {
+    color: $daimler-black;
+    background-color: $daimler-error-secondary-bg;
+    border-color: $daimler-error-secondary-border;
+}
+
+.ui-growl-message-success .ui-growl-image {
+    color: $daimler-success-primary-bg;
+}
+
+.ui-growl-message-info .ui-growl-image {
+    color: $daimler-info-primary-bg;
+}
+
+.ui-growl-message-error .ui-growl-image {
+    color: $daimler-error-primary-bg;
+}

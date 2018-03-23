@@ -1,0 +1,64 @@
+<section>
+    <div class="error__container">
+
+        <!-- 505 error page -->
+        <ng-container *ngIf="error === '500'">
+            <div class="error__message__container">
+                <span class="icon-basic-infomation-circle error__sign"></span>
+                <h3>
+                    {{ 'i18n_ServerError' | translate }}
+                </h3>
+                <br>
+                <span>{{ 'i18n_ServerError_Message' | translate }}</span>
+            </div>
+        </ng-container>
+
+        <!-- 404 error page -->
+        <ng-container *ngIf="error === '404'">
+
+            <!-- 404 for documents -->
+            <ng-container *ngIf="returnedUrl === 'document'">
+                <div class="error__message__container">
+                    <span class="icon-basic-infomation-circle error__sign"></span>
+                    <h3>
+                        {{ 'i18n_DocumentNotFound' | translate }}
+                    </h3>
+                    <br>
+                    <span>{{ 'i18n_DocumentNotFound_Message' | translate }}</span>
+                </div>
+            </ng-container>
+
+            <!-- 404 for pages -->
+            <ng-container *ngIf="returnedUrl !== 'document'">
+                <div class="error__message__container">
+                    <span class="icon-basic-infomation-circle error__sign"></span>
+                    <h3>
+                        {{ 'i18n_PageNotFound' | translate }}
+                    </h3>
+                    <br>
+                    <span>{{ 'i18n_PageNotFound_Message' | translate }}</span>
+                </div>
+            </ng-container>
+        </ng-container>
+
+        <!-- return button -->
+        <ng-container *ngIf="returnedUrl === 'document'">
+            <a class="btn btn-primary" href="javascript:window.close()">
+                <span class="icon-interaction-arrow-left-12 back__button"></span>
+                <span>
+                    {{ 'i18n_Back' | translate }}
+                </span>
+            </a>
+        </ng-container>
+
+        <ng-container *ngIf="returnedUrl !== 'document'">
+            <a class="btn btn-primary" *ngIf="!helper.isNullOrEmpty(returnedUrl)" [routerLink]="returnedUrl">
+                <span class="icon-interaction-arrow-left-12 back__button"></span>
+                <span>
+                    {{ 'i18n_Back' | translate }}
+                </span>
+            </a>
+        </ng-container>
+
+    </div>
+</section>

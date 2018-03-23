@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Emil</title>
+    <base href="/">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <link rel="icon" type="image/x-icon" href="favicon.png">
+</head>
+
+<body>
+    <emil-root></emil-root>
+    <!--
+        We are loading the spinner icon here so it's already loaded 
+        when we need it somewhere in the application.
+        Otherwise it's possible that the browser first starts loading
+        an Ajax call and after it finishes starts loading the spinner
+        which is counterproductive.
+    -->
+    <img style="display: none" src="/assets/img/spinner.png" />
+</body>
+
+</html>

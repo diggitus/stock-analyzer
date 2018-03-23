@@ -1,0 +1,34 @@
+/************************************************
+
+  EMIL globals
+
+************************************************/
+@import 'mixins';
+
+html {
+    height: 100%;
+}
+
+body {
+    height: 100%;
+}
+
+a {
+    @include transition();
+}
+
+li {
+    outline: none;
+}
+
+a:hover {
+    cursor: pointer;
+}
+
+button {
+    @include transition();
+}
+
+.no-pad {
+    padding: 0;
+}

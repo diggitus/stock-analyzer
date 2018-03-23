@@ -1,0 +1,265 @@
+/************************************************
+
+  EMIL icon fonts
+
+************************************************/
+
+@font-face {
+    font-family: 'Daimler_Iconset-FTL';
+    src: url('../../../bootstrap/fonts/Daimler_Iconset-Filetypes-Logos_01.eot?s8u57i');
+    src: url('../../../bootstrap/fonts/Daimler_Iconset-Filetypes-Logos_01.eot?s8u57i#iefix') format('embedded-opentype');
+    src: url('../../../bootstrap/fonts/Daimler_Iconset-Filetypes-Logos_01.ttf?s8u57i') format('truetype');
+    src: url('../../../bootstrap/fonts/Daimler_Iconset-Filetypes-Logos_01.woff?s8u57i') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+[class^="dai-icon-filetypes-"],
+[class*=" dai-icon-filetypes-"] {
+    font-family: 'Daimler_Iconset-FTL' !important;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.dai-icon-filetypes-logo-xing:before {
+    content: "\21";
+}
+
+.dai-icon-filetypes-logo-twitter:before {
+    content: "\22";
+}
+
+.dai-icon-filetypes-logo-twitter-bird:before {
+    content: "\23";
+}
+
+.dai-icon-filetypes-logo-you-tube:before {
+    content: "\24";
+}
+
+.dai-icon-filetypes-logo-pinterest:before {
+    content: "\25";
+}
+
+.dai-icon-filetypes-logo-youtube-clip:before {
+    content: "\26";
+}
+
+.dai-icon-filetypes-logo-linkedin:before {
+    content: "\27";
+}
+
+.dai-icon-filetypes-logo-google-plus-1:before {
+    content: "\28";
+}
+
+.dai-icon-filetypes-logo-facebook:before {
+    content: "\29";
+}
+
+.dai-icon-filetypes-news-article:before {
+    content: "\2a";
+}
+
+.dai-icon-filetypes-newspaper:before {
+    content: "\2b";
+}
+
+.dai-icon-filetypes-video-clip-2:before {
+    content: "\2c";
+}
+
+.dai-icon-filetypes-file-acrobat:before {
+    content: "\2d";
+}
+
+.dai-icon-filetypes-file-add-1:before {
+    content: "\2e";
+}
+
+.dai-icon-filetypes-file-bar-graph:before {
+    content: "\2f";
+}
+
+.dai-icon-filetypes-file-block-1:before {
+    content: "\30";
+}
+
+.dai-icon-filetypes-file-check-1:before {
+    content: "\31";
+}
+
+.dai-icon-filetypes-file-delete-1:before {
+    content: "\32";
+}
+
+.dai-icon-filetypes-file-download-1:before {
+    content: "\33";
+}
+
+.dai-icon-filetypes-file-edit-1:before {
+    content: "\34";
+}
+
+.dai-icon-filetypes-file-excel:before {
+    content: "\35";
+}
+
+.dai-icon-filetypes-file-favorite-star-1:before {
+    content: "\36";
+}
+
+.dai-icon-filetypes-file-format-mp3:before {
+    content: "\37";
+}
+
+.dai-icon-filetypes-file-format-mp4:before {
+    content: "\38";
+}
+
+.dai-icon-filetypes-file-format-zip:before {
+    content: "\39";
+}
+
+.dai-icon-filetypes-file-graph-pie:before {
+    content: "\3a";
+}
+
+.dai-icon-filetypes-file-hierarchy:before {
+    content: "\3b";
+}
+
+.dai-icon-filetypes-file-highlight:before {
+    content: "\3c";
+}
+
+.dai-icon-filetypes-file-keynote:before {
+    content: "\3d";
+}
+
+.dai-icon-filetypes-file-line-graph:before {
+    content: "\3e";
+}
+
+.dai-icon-filetypes-file-lock-1:before {
+    content: "\3f";
+}
+
+.dai-icon-filetypes-file-module-edit:before {
+    content: "\40";
+}
+
+.dai-icon-filetypes-file-music-1:before {
+    content: "\41";
+}
+
+.dai-icon-filetypes-file-new-1:before {
+    content: "\42";
+}
+
+.dai-icon-filetypes-file-new-2:before {
+    content: "\43";
+}
+
+.dai-icon-filetypes-file-new-3:before {
+    content: "\44";
+}
+
+.dai-icon-filetypes-file-notepad:before {
+    content: "\45";
+}
+
+.dai-icon-filetypes-file-pdf:before {
+    content: "\46";
+}
+
+.dai-icon-filetypes-file-picture:before {
+    content: "\47";
+}
+
+.dai-icon-filetypes-file-powerpoint:before {
+    content: "\48";
+}
+
+.dai-icon-filetypes-file-powerpoint-show:before {
+    content: "\49";
+}
+
+.dai-icon-filetypes-file-refresh-1:before {
+    content: "\4a";
+}
+
+.dai-icon-filetypes-file-rtf:before {
+    content: "\4b";
+}
+
+.dai-icon-filetypes-file-setting-1:before {
+    content: "\4c";
+}
+
+.dai-icon-filetypes-file-stamp:before {
+    content: "\4d";
+}
+
+.dai-icon-filetypes-file-subtract-1:before {
+    content: "\4e";
+}
+
+.dai-icon-filetypes-file-sync-1:before {
+    content: "\4f";
+}
+
+.dai-icon-filetypes-file-table:before {
+    content: "\50";
+}
+
+.dai-icon-filetypes-file-text-chart:before {
+    content: "\51";
+}
+
+.dai-icon-filetypes-file-text-document:before {
+    content: "\52";
+}
+
+.dai-icon-filetypes-file-upload-1:before {
+    content: "\53";
+}
+
+.dai-icon-filetypes-file-video-1:before {
+    content: "\54";
+}
+
+.dai-icon-filetypes-file-view-1:before {
+    content: "\55";
+}
+
+.dai-icon-filetypes-file-warning-1:before {
+    content: "\56";
+}
+
+.dai-icon-filetypes-file-words:before {
+    content: "\57";
+}
+
+.dai-icon-filetypes-file-zipped:before {
+    content: "\58";
+}
+
+.dai-icon-filetypes-picture-1:before {
+    content: "\59";
+}
+
+.dai-icon-filetypes-picture-2:before {
+    content: "\5a";
+}
+
+.dai-icon-filetypes-picture-3:before {
+    content: "\5b";
+}

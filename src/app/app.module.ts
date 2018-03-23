@@ -1,37 +1,27 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
+import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { BaseService } from './service/base.service';
+import { FinancialsService } from './services/financials.service';
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
-  imports: [
-    BrowserModule,
-    FormsModule,
-    HttpModule,
-    AppRoutingModule
-  ],
-  providers: [
-    BaseService
-  ],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent
+    ],
+    imports: [
+        BrowserModule,
+        FormsModule,
+        HttpClientModule,
+        AppRoutingModule
+    ],
+    providers: [
+        FinancialsService
+    ],
+    bootstrap: [AppComponent]
 })
-export class AppModule { 
-
-  output: string;
-
-  constructor(
-    private baseService: BaseService
-  ) {
-   this.baseService.get().subscribe(resp => {
-     this.output = <string>resp;
-   });
-  }
+export class AppModule {
 
 }

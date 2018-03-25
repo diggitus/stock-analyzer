@@ -4,6 +4,17 @@
     <div>priceCashFlow: {{ valuation.priceCashFlow }}</div>
     <div>priceSales: {{ valuation.priceSales }}</div>
     <div>dividendYield: {{ valuation.dividendYield }}</div>
+
+    <div>priceEarningsAvg: {{ valuation.priceEarnings5yAvg }}</div>
+    <div>priceBookAvg: {{ valuation.priceBook5yAvg }}</div>
+    <div>priceCashFlowAvg: {{ valuation.priceCashFlow5yAvg }}</div>
+    <div>priceSalesAvg: {{ valuation.priceSales5yAvg }}</div>
+    <div>dividendYieldAvg: {{ valuation.dividendYield5yAvg }}</div>
+</ng-container>
+
+<ng-container *ngIf="valuationHistory">
+    <div>{{ valuationHistory.priceEarnings[0] }}</div>
+    <div>{{ valuationHistory.priceBook[0] }}</div>
 </ng-container>
 
 <router-outlet></router-outlet>

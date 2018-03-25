@@ -35,7 +35,7 @@ module.exports = function (config) {
         colors: true,
         logLevel: config.LOG_INFO,
         autoWatch: true,
-        browsers: ['ChromeHeadless'],
+        browsers: ['PhantomJS'],
         singleRun: false,
 
         // Test options for delaying a failure. Maybe fixes the Jenkins issues.

@@ -32,6 +32,87 @@ export class ValuationService extends BaseService {
     }
 
     /**
+     * Returns valuation list.
+     * @param searchRequest The search request.
+     */
+    getValuationList(searchRequest: SearchRequest): Observable<Valuation | null> {
+        const url = `${this.baseUrl}/${this.valuationList}?` +
+            `&t=${searchRequest.stockExchange}:${searchRequest.symbol}` +
+            `&region=${searchRequest.region}` +
+            `&culture=${searchRequest.culture}`;
+
+        return this.http.get(url, { headers: this.getDefaultHeaders(), responseType: 'text' })
+            .map(resp => {
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(<string>resp, 'text/html');
+                return this.parseValuationList(doc.body);
+            })
+            .catch(error => {
+                return Observable.of(null);
+            });
+    }
+
+    /**
+     * Parses valuation list.
+     * @param elem The parent element which contains the valuation list table.
+     */
+    parseValuationList(elem: HTMLElement): Valuation {
+        const valuation = new Valuation();
+        const tableRows = elem.querySelectorAll('tbody tr th');
+
+        valuation.priceEarnings = this.parseValuationListItem(tableRows, 'Price/Earnings', 1);
+        valuation.priceBook = this.parseValuationListItem(tableRows, 'Price/Book', 1);
+        valuation.priceSales = this.parseValuationListItem(tableRows, 'Price/Sales', 1);
+        valuation.priceCashFlow = this.parseValuationListItem(tableRows, 'Price/Cash Flow', 1);
+        valuation.dividendYield = this.parseValuationListItem(tableRows, 'Dividend Yield %', 1);
+
+        valuation.priceEarnings5yAvg = this.parseValuationListItem(tableRows, 'Price/Earnings', 4);
+        valuation.priceBook5yAvg = this.parseValuationListItem(tableRows, 'Price/Book', 4);
+        valuation.priceSales5yAvg = this.parseValuationListItem(tableRows, 'Price/Sales', 4);
+        valuation.priceCashFlow5yAvg = this.parseValuationListItem(tableRows, 'Price/Cash Flow', 4);
+        valuation.dividendYield5yAvg = this.parseValuationListItem(tableRows, 'Dividend Yield %', 4);
+
+        return valuation;
+    }
+
+    /**
+     * Returns table row value or -1.
+     * @param tableRows HTML table rows from HTTP response.
+     * @param label The label in the table row.
+     * @param col The column in the table row.
+     */
+    private parseValuationListItem(tableRows: NodeListOf<Element>, label: string, col: number): number {
+        if (!tableRows) {
+            return -1;
+        }
+
+        for (let i = 0; i < tableRows.length; i++) {
+            const tableRow = tableRows[i];
+
+            if (!tableRow.parentElement) {
+                return -1;
+            }
+
+            const children = tableRow.parentElement.children;
+            const elemLabel = tableRow.innerHTML;
+
+            if (!children[col]) {
+                return -1;
+            }
+            const symbolLabel = children[col].innerHTML;
+
+            try {
+                if (elemLabel === label) {
+                    return parseFloat(symbolLabel);
+                }
+            } catch (e) {
+                return -1;
+            }
+        }
+        return -1;
+    }
+
+    /**
      * Returns valuation history.
      * @param searchRequest The search request.
      */
@@ -44,26 +125,9 @@ export class ValuationService extends BaseService {
 
         return this.http.get(url, { headers: this.getDefaultHeaders(), responseType: 'text' })
             .map(resp => {
-                return this.parseValuationHistory(<string>resp);
-            })
-            .catch(error => {
-                return Observable.of(null);
-            });
-    }
-
-    /**
-     * Returns valuation list.
-     * @param searchRequest The search request.
-     */
-    getValuationList(searchRequest: SearchRequest): Observable<Valuation | null> {
-        const url = `${this.baseUrl}/${this.valuationList}?` +
-            `&t=${searchRequest.stockExchange}:${searchRequest.symbol}` +
-            `&region=${searchRequest.region}` +
-            `&culture=${searchRequest.culture}`;
-
-        return this.http.get(url, { headers: this.getDefaultHeaders(), responseType: 'text' })
-            .map(resp => {
-                return this.parseValuationList(<string>resp);
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(<string>resp, 'text/html');
+                return this.parseValuationHistory(doc.body);
             })
             .catch(error => {
                 return Observable.of(null);
@@ -72,13 +136,11 @@ export class ValuationService extends BaseService {
 
     /**
      * Parses valuation history.
-     * @param resp The get response.
+     * @param elem The element which contains the valuation history.
      */
-    private parseValuationHistory(resp: string): ValuationHistory {
+    parseValuationHistory(elem: HTMLElement): ValuationHistory {
         const valuationHistory = new ValuationHistory();
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(resp, 'text/html');
-        const tableRows = doc.querySelectorAll('tbody tr');
+        const tableRows = elem.querySelectorAll('tbody tr');
 
         valuationHistory.priceEarnings = this.parseValuationHistoryItem(tableRows, 'Price/Earnings');
         valuationHistory.priceBook = this.parseValuationHistoryItem(tableRows, 'Price/Book');
@@ -132,66 +194,6 @@ export class ValuationService extends BaseService {
         return result;
     }
 
-    /**
-     * Parses valuation list.
-     * @param resp The get response.
-     */
-    private parseValuationList(resp: string): Valuation {
-        const valuation = new Valuation();
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(resp, 'text/html');
-        const tableRows = doc.querySelectorAll('tbody tr th');
 
-        valuation.priceEarnings = this.parseValuationListItem(tableRows, 'Price/Earnings', 1);
-        valuation.priceBook = this.parseValuationListItem(tableRows, 'Price/Book', 1);
-        valuation.priceSales = this.parseValuationListItem(tableRows, 'Price/Sales', 1);
-        valuation.priceCashFlow = this.parseValuationListItem(tableRows, 'Price/Cash Flow', 1);
-        valuation.dividendYield = this.parseValuationListItem(tableRows, 'Dividend Yield %', 1);
-
-        valuation.priceEarnings5yAvg = this.parseValuationListItem(tableRows, 'Price/Earnings', 4);
-        valuation.priceBook5yAvg = this.parseValuationListItem(tableRows, 'Price/Book', 4);
-        valuation.priceSales5yAvg = this.parseValuationListItem(tableRows, 'Price/Sales', 4);
-        valuation.priceCashFlow5yAvg = this.parseValuationListItem(tableRows, 'Price/Cash Flow', 4);
-        valuation.dividendYield5yAvg = this.parseValuationListItem(tableRows, 'Dividend Yield %', 4);
-
-        return valuation;
-    }
-
-    /**
-     * Returns table row value or -1.
-     * @param tableRows HTML table rows from HTTP response.
-     * @param label The label in the table row.
-     * @param col The column in the table row.
-     */
-    private parseValuationListItem(tableRows: NodeListOf<Element>, label: string, col: number): number {
-        if (!tableRows) {
-            return -1;
-        }
-
-        for (let i = 0; i < tableRows.length; i++) {
-            const tableRow = tableRows[i];
-
-            if (!tableRow.parentElement) {
-                return -1;
-            }
-
-            const children = tableRow.parentElement.children;
-            const elemLabel = tableRow.innerHTML;
-
-            if (!children[col]) {
-                return -1;
-            }
-            const symbolLabel = children[col].innerHTML;
-
-            try {
-                if (elemLabel === label) {
-                    return parseFloat(symbolLabel);
-                }
-            } catch (e) {
-                return -1;
-            }
-        }
-        return -1;
-    }
 
 }

@@ -44,7 +44,7 @@ export class FinancialsService extends BaseService {
 
     /**
      * Returns the finance part.
-     * @param searchRequest The search request
+     * @param searchRequest The search request.
      */
     getFinancePart(searchRequest: SearchRequest): Observable<Finance | null> {
         const url = `${this.baseUrl}/${this.type}/${this.financePart}.html` +
@@ -91,6 +91,10 @@ export class FinancialsService extends BaseService {
         return finance;
     }
 
+    /**
+     * Returns the key stat part.
+     * @param searchRequest The search request.
+     */
     getKeyStatPart(searchRequest: SearchRequest): Observable<KeyStat | null> {
         const url = `${this.baseUrl}/${this.type}/${this.keyStatPart}.html` +
             `?t=${searchRequest.stockExchange}:${searchRequest.symbol}` +

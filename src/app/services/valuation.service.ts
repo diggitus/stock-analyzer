@@ -16,6 +16,7 @@ import { Observable } from 'rxjs/Observable';
 @Injectable()
 export class ValuationService extends BaseService {
 
+    private readonly type = 'valuate';
     private readonly valuationList = 'current-valuation-list.action';
     private readonly valuationHistory = 'valuation-history.action';
 
@@ -36,12 +37,12 @@ export class ValuationService extends BaseService {
      * @param searchRequest The search request.
      */
     getValuationList(searchRequest: SearchRequest): Observable<Valuation | null> {
-        const url = `${this.baseUrl}/${this.valuationList}?` +
-            `&t=${searchRequest.stockExchange}:${searchRequest.symbol}` +
+        const url = `${this.baseUrl}/${this.type}/${this.valuationList}?` +
+            `t=${searchRequest.stockExchange}:${searchRequest.symbol}` +
             `&region=${searchRequest.region}` +
             `&culture=${searchRequest.culture}`;
 
-        return this.http.get(url, { headers: this.getDefaultHeaders(), responseType: 'text' })
+        return this.http.get(url, { headers: this.getHtmlHeaders(), responseType: 'text' })
             .map(resp => {
                 const parser = new DOMParser();
                 const doc = parser.parseFromString(<string>resp, 'text/html');
@@ -99,10 +100,15 @@ export class ValuationService extends BaseService {
             if (!children[col]) {
                 return -1;
             }
-            const symbolLabel = children[col].innerHTML;
+            let symbolLabel = children[col].innerHTML;
 
             try {
                 if (elemLabel === label) {
+                    const idx = symbolLabel.indexOf(',');
+
+                    if (idx >= 0) {
+                        symbolLabel = symbolLabel.slice(0, idx) + symbolLabel.slice(idx + 1, symbolLabel.length);
+                    }
                     return parseFloat(symbolLabel);
                 }
             } catch (e) {
@@ -117,13 +123,13 @@ export class ValuationService extends BaseService {
      * @param searchRequest The search request.
      */
     getvaluationHistory(searchRequest: SearchRequest): Observable<ValuationHistory | null> {
-        const url = `${this.baseUrl}/${this.valuationHistory}?` +
-            `&t=${searchRequest.stockExchange}:${searchRequest.symbol}` +
+        const url = `${this.baseUrl}/${this.type}/${this.valuationHistory}?` +
+            `t=${searchRequest.stockExchange}:${searchRequest.symbol}` +
             `&region=${searchRequest.region}` +
             `&culture=${searchRequest.culture}` +
             `&type=price-earnings`;
 
-        return this.http.get(url, { headers: this.getDefaultHeaders(), responseType: 'text' })
+        return this.http.get(url, { headers: this.getHtmlHeaders(), responseType: 'text' })
             .map(resp => {
                 const parser = new DOMParser();
                 const doc = parser.parseFromString(<string>resp, 'text/html');
@@ -185,7 +191,13 @@ export class ValuationService extends BaseService {
                 const val = rowData[j];
 
                 try {
-                    result.push(parseFloat(val.innerHTML));
+                    let label = val.innerHTML;
+                    const idx = label.indexOf(',');
+
+                    if (idx >= 0) {
+                        label = label.slice(0, idx) + label.slice(idx + 1, label.length);
+                    }
+                    result.push(parseFloat(label));
                 } catch (e) {
                     console.error('Couldn\'t parse value');
                 }

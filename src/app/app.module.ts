@@ -2,6 +2,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
+import { FinancialsService } from 'app/services/financials.service';
 import { StockService } from 'app/services/stock.service';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -20,6 +21,7 @@ import { ValuationService } from './services/valuation.service';
     ],
     providers: [
         ValuationService,
+        FinancialsService,
         StockService
     ],
     bootstrap: [AppComponent]

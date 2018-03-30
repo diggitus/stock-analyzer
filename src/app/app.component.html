@@ -17,4 +17,83 @@
     <div>{{ valuationHistory.priceBook[0] }}</div>
 </ng-container>
 
+<ng-container *ngIf="finance">
+    <div>revenue {{ finance.revenue[0] }}</div>
+    <div>grossMargin {{ finance.grossMargin[0] }}</div>
+    <div>operatingIncome {{ finance.operatingIncome[0] }}</div>
+    <div>operatingMargin {{ finance.operatingMargin[0] }}</div>
+    <div>netIncome {{ finance.netIncome[0] }}</div>
+    <div>earningsPerShare {{ finance.earningsPerShare[0] }}</div>
+    <div>dividends {{ finance.dividends[0] }}</div>
+    <div>payoutRatio {{ finance.payoutRatio[0] }}</div>
+    <div>shares {{ finance.shares[0] }}</div>
+    <div>bookValuePerShare {{ finance.bookValuePerShare[0] }}</div>
+    <div>operatingCashFlow {{ finance.operatingCashFlow[0] }}</div>
+    <div>capSpending {{ finance.capSpending[0] }}</div>
+    <div>freeCashFlow {{ finance.freeCashFlow[0] }}</div>
+    <div>freeCashFlowPerShare {{ finance.freeCashFlowPerShare[0] }}</div>
+    <div>workingCapital {{ finance.workingCapital[0] }}</div>
+</ng-container>
+
+<ng-container *ngIf="keyStat">
+    <ng-container *ngIf="keyStat.balanceSheetItems">
+        <div>cashShortItemInvestments {{ keyStat.balanceSheetItems.cashShortItemInvestments[0]
+            }}
+        </div>
+        <div>accountsReceivable {{ keyStat.balanceSheetItems.accountsReceivable[0] }}</div>
+        <div>inventory {{ keyStat.balanceSheetItems.inventory[0] }}</div>
+        <div>otherCurrentAssets {{ keyStat.balanceSheetItems.otherCurrentAssets[0] }}</div>
+        <div>totalCurrentAssets {{ keyStat.balanceSheetItems.totalCurrentAssets[0] }}</div>
+        <div>netPPE {{ keyStat.balanceSheetItems.netPPE[0] }}</div>
+        <div>intangibles {{ keyStat.balanceSheetItems.intangibles[0] }}</div>
+        <div>otherLongTermAssets {{ keyStat.balanceSheetItems.otherLongTermAssets[0] }}</div>
+        <div>totalAssets {{ keyStat.balanceSheetItems.totalAssets[0] }}</div>
+        <div>accountsPayable {{ keyStat.balanceSheetItems.accountsPayable[0] }}</div>
+        <div>shortTermDebt {{ keyStat.balanceSheetItems.shortTermDebt[0] }}</div>
+        <div>taxesPayable {{ keyStat.balanceSheetItems.taxesPayable[0] }}</div>
+        <div>accruedLiabilites {{ keyStat.balanceSheetItems.accruedLiabilites[0] }}</div>
+        <div>otherShortTermLiabilities {{ keyStat.balanceSheetItems.otherShortTermLiabilities[0]
+            }}
+        </div>
+        <div>totalCurrentLiabilities {{ keyStat.balanceSheetItems.totalCurrentLiabilities[0]
+            }}</div>
+        <div>longTermDebt {{ keyStat.balanceSheetItems.longTermDebt[0] }}</div>
+        <div>otherLongTermLiabilities {{ keyStat.balanceSheetItems.otherLongTermLiabilities[0]
+            }}
+        </div>
+        <div>totalLiabilities {{ keyStat.balanceSheetItems.totalLiabilities[0] }}</div>
+        <div>totalStockholdersEquity {{ keyStat.balanceSheetItems.totalStockholdersEquity[0]
+            }}</div>
+        <div>totalLiabilities {{ keyStat.balanceSheetItems.totalLiabilities[0] }}</div>
+    </ng-container>
+
+    <ng-container *ngIf="keyStat.cashFlowRatios">
+        <div>operatingCashFlowGrowth {{ keyStat.cashFlowRatios.operatingCashFlowGrowth[0]
+            }}</div>
+        <div>freeCashFlowGrowth {{ keyStat.cashFlowRatios.freeCashFlowGrowth[0] }}</div>
+        <div>capExAOfSales {{ keyStat.cashFlowRatios.capExAOfSales[0] }}</div>
+        <div>freeCashFlowSales {{ keyStat.cashFlowRatios.freeCashFlowSales[0] }}</div>
+        <div>freeCashFlowNetIncome {{ keyStat.cashFlowRatios.freeCashFlowNetIncome[0]
+            }}</div>
+    </ng-container>
+
+    <ng-container *ngIf="keyStat.efficiency">
+        <div>daysSalesOutstanding {{ keyStat.efficiency.daysSalesOutstanding[0] }}</div>
+        <div>daysInventory {{ keyStat.efficiency.daysInventory[0] }}</div>
+        <div>payablesPeriod {{ keyStat.efficiency.payablesPeriod[0] }}</div>
+        <div>cashConversionCycle {{ keyStat.efficiency.cashConversionCycle[0] }}</div>
+        <div>receivablesTurnover {{ keyStat.efficiency.receivablesTurnover[0] }}</div>
+        <div>inventoryTurnover {{ keyStat.efficiency.inventoryTurnover[0] }}</div>
+        <div>fixedAssetsTurnover {{ keyStat.efficiency.fixedAssetsTurnover[0] }}</div>
+        <div>assetTurnover {{ keyStat.efficiency.assetTurnover[0] }}</div>
+    </ng-container>
+
+    <ng-container *ngIf="keyStat.liquidityHealth">
+        <div>currentRatio {{ keyStat.liquidityHealth.currentRatio[0] }}</div>
+        <div>quickRatio {{ keyStat.liquidityHealth.quickRatio[0] }}</div>
+        <div>financialLeverage {{ keyStat.liquidityHealth.financialLeverage[0] }}</div>
+        <div>debtEquity {{ keyStat.liquidityHealth.debtEquity[0] }}</div>
+    </ng-container>
+</ng-container>
+
 <router-outlet></router-outlet>

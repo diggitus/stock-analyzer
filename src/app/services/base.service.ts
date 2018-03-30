@@ -1,16 +1,31 @@
 import { HttpHeaders } from '@angular/common/http';
 
+/**
+ * Base service.
+ */
 export class BaseService {
 
-    baseUrl = 'http://financials.morningstar.com/valuate';
+    baseUrl = 'http://financials.morningstar.com';
 
-    private headers: HttpHeaders = new HttpHeaders({
+    private htmlHeaders: HttpHeaders = new HttpHeaders({
         'Content-Type': 'text/html;charset=UTF-8',
         'Accept': 'text/html'
     });
 
-    getDefaultHeaders(): HttpHeaders {
-        return this.headers;
+    private jsonHeaders: HttpHeaders = new HttpHeaders({
+        'Content-Type': 'application/json;charset=UTF-8',
+        'Accept': 'application/json'
+    });
+
+    /**
+     * Returns default request header.
+     */
+    getHtmlHeaders(): HttpHeaders {
+        return this.htmlHeaders;
+    }
+
+    getJsonHeaders(): HttpHeaders {
+        return this.jsonHeaders;
     }
 
 }

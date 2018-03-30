@@ -111,7 +111,7 @@ describe('ValuationService', () => {
         const valuationResp = valuationService.parseValuationHistory(html);
         expect(valuationResp).not.toBeNull();
 
-        if (valuationResp) {
+        if (valuationResp && valuationResp.priceEarnings) {
             expect(valuationResp.priceEarnings[0]).toBe(1);
             expect(valuationResp.priceEarnings[1]).toBe(2);
             expect(valuationResp.priceEarnings[2]).toBe(3);

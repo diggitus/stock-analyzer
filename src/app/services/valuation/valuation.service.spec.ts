@@ -1,6 +1,6 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { ValuationService } from 'app/services/valuation.service';
+import { ValuationService } from 'app/services/valuation/valuation.service';
 
 // tslint:disable:no-non-null-assertion
 describe('ValuationService', () => {

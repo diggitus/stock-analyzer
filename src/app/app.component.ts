@@ -4,9 +4,9 @@ import { KeyStat } from 'app/model/keyStat';
 import { SearchRequest } from 'app/model/searchRequest';
 import { Valuation } from 'app/model/valuation';
 import { ValuationHistory } from 'app/model/valuationHistory';
-import { FinancialsService } from 'app/services/financials.service';
+import { FinancialsActions } from 'app/services/financials/financials.actions';
 import { StockService } from 'app/services/stock.service';
-import { ValuationService } from 'app/services/valuation.service';
+import { ValuationActions } from 'app/services/valuation/valuation.actions';
 
 @Component({
     selector: 'app-root',
@@ -22,17 +22,17 @@ export class AppComponent {
     keyStat: KeyStat | null;
 
     constructor(
-        private valuationService: ValuationService,
-        private financialsService: FinancialsService,
+        private valuationActions: ValuationActions,
+        private financialsActions: FinancialsActions,
         private stockService: StockService
     ) {
         const searchRequest: SearchRequest = new SearchRequest();
         searchRequest.symbol = 'ads';
 
-        this.valuationService.getValuationList(searchRequest).subscribe(valuationResp => this.valuation = valuationResp);
-        this.valuationService.getvaluationHistory(searchRequest).subscribe(valuationHistoryResp => this.valuationHistory = valuationHistoryResp);
+        this.valuationActions.getValuationList(searchRequest).subscribe(valuationResp => this.valuation = valuationResp);
+        this.valuationActions.getValuationHistory(searchRequest).subscribe(valuationHistoryResp => this.valuationHistory = valuationHistoryResp);
 
-        this.financialsService.getFinancePart(searchRequest).subscribe((financeResp: Finance | null) => this.finance = financeResp);
-        this.financialsService.getKeyStatPart(searchRequest).subscribe((keyStatResp: KeyStat | null) => this.keyStat = keyStatResp);
+        this.financialsActions.getFinance(searchRequest).subscribe((financeResp: Finance | null) => this.finance = financeResp);
+        this.financialsActions.getKeyStat(searchRequest).subscribe((keyStatResp: KeyStat | null) => this.keyStat = keyStatResp);
     }
 }

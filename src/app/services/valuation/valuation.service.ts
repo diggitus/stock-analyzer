@@ -123,7 +123,7 @@ export class ValuationService extends BaseService {
      * Returns valuation history.
      * @param searchRequest The search request.
      */
-    getvaluationHistory(searchRequest: SearchRequest): Observable<ValuationHistory | null> {
+    getValuationHistory(searchRequest: SearchRequest): Observable<ValuationHistory | null> {
         const url = `${this.baseUrl}/${this.type}/${this.valuationHistory}` +
             `?t=${searchRequest.stockExchange}:${searchRequest.symbol}` +
             `&region=${searchRequest.region}` +

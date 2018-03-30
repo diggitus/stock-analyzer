@@ -1,14 +1,20 @@
+/**
+ * Valuation history class.
+ */
 export class ValuationHistory {
-    priceEarnings: Array<number>; // KGV
-    priceBook: Array<number>; // KBV
-    priceSales: Array<number>; // KUV
-    priceCashFlow: Array<number>;
+    priceEarnings: Array<number> | null; // KGV
+    priceBook: Array<number> | null; // KBV
+    priceSales: Array<number> | null; // KUV
+    priceCashFlow: Array<number> | null;
 
+    /**
+     * Constructor.
+     */
     constructor() {
-        this.priceEarnings = [];
-        this.priceBook = [];
-        this.priceCashFlow = [];
-        this.priceSales = [];
+        this.priceEarnings = null;
+        this.priceBook = null;
+        this.priceCashFlow = null;
+        this.priceSales = null;
     }
 
 }

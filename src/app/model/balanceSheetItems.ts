@@ -1,45 +1,51 @@
+/**
+ * Balance Sheet Class.
+ */
 export class BalanceSheetItems {
-    cashShortItemInvestments: Array<number>;
-    accountsReceivable: Array<number>;
-    inventory: Array<number>;
-    otherCurrentAssets: Array<number>;
-    totalCurrentAssets: Array<number>;
-    netPPE: Array<number>;
-    intangibles: Array<number>;
-    otherLongTermAssets: Array<number>;
-    totalAssets: Array<number>;
-    accountsPayable: Array<number>;
-    shortTermDebt: Array<number>;
-    taxesPayable: Array<number>;
-    accruedLiabilites: Array<number>;
-    otherShortTermLiabilities: Array<number>;
-    totalCurrentLiabilities: Array<number>;
-    longTermDebt: Array<number>;
-    otherLongTermLiabilities: Array<number>;
-    totalLiabilities: Array<number>;
-    totalStockholdersEquity: Array<number>;
-    totalLiabilitiesEquity: Array<number>;
+    cashShortItemInvestments: Array<number> | null;
+    accountsReceivable: Array<number> | null;
+    inventory: Array<number> | null;
+    otherCurrentAssets: Array<number> | null;
+    totalCurrentAssets: Array<number> | null;
+    netPPE: Array<number> | null;
+    intangibles: Array<number> | null;
+    otherLongTermAssets: Array<number> | null;
+    totalAssets: Array<number> | null;
+    accountsPayable: Array<number> | null;
+    shortTermDebt: Array<number> | null;
+    taxesPayable: Array<number> | null;
+    accruedLiabilites: Array<number> | null;
+    otherShortTermLiabilities: Array<number> | null;
+    totalCurrentLiabilities: Array<number> | null;
+    longTermDebt: Array<number> | null;
+    otherLongTermLiabilities: Array<number> | null;
+    totalLiabilities: Array<number> | null;
+    totalStockholdersEquity: Array<number> | null;
+    totalLiabilitiesEquity: Array<number> | null;
 
+    /**
+     * Constructor.
+     */
     constructor() {
-        this.cashShortItemInvestments = new Array<number>();
-        this.accountsReceivable = new Array<number>();
-        this.inventory = new Array<number>();
-        this.otherCurrentAssets = new Array<number>();
-        this.totalCurrentAssets = new Array<number>();
-        this.netPPE = new Array<number>();
-        this.intangibles = new Array<number>();
-        this.otherLongTermAssets = new Array<number>();
-        this.totalAssets = new Array<number>();
-        this.accountsPayable = new Array<number>();
-        this.shortTermDebt = new Array<number>();
-        this.taxesPayable = new Array<number>();
-        this.accruedLiabilites = new Array<number>();
-        this.otherShortTermLiabilities = new Array<number>();
-        this.totalCurrentLiabilities = new Array<number>();
-        this.longTermDebt = new Array<number>();
-        this.otherLongTermLiabilities = new Array<number>();
-        this.totalLiabilities = new Array<number>();
-        this.totalStockholdersEquity = new Array<number>();
-        this.totalLiabilitiesEquity = new Array<number>();
+        this.cashShortItemInvestments = null;
+        this.accountsReceivable = null;
+        this.inventory = null;
+        this.otherCurrentAssets = null;
+        this.totalCurrentAssets = null;
+        this.netPPE = null;
+        this.intangibles = null;
+        this.otherLongTermAssets = null;
+        this.totalAssets = null;
+        this.accountsPayable = null;
+        this.shortTermDebt = null;
+        this.taxesPayable = null;
+        this.accruedLiabilites = null;
+        this.otherShortTermLiabilities = null;
+        this.totalCurrentLiabilities = null;
+        this.longTermDebt = null;
+        this.otherLongTermLiabilities = null;
+        this.totalLiabilities = null;
+        this.totalStockholdersEquity = null;
+        this.totalLiabilitiesEquity = null;
     }
 }

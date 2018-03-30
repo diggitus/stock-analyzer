@@ -1,13 +1,19 @@
+/**
+ * Liquidity Health Class.
+ */
 export class LiquidityHealth {
-    currentRatio: Array<number>;
-    quickRatio: Array<number>;
-    financialLeverage: Array<number>;
-    debtEquity: Array<number>;
+    currentRatio: Array<number> | null;
+    quickRatio: Array<number> | null;
+    financialLeverage: Array<number> | null;
+    debtEquity: Array<number> | null;
 
+    /**
+     * Constructor.
+     */
     constructor() {
-        this.currentRatio = new Array<number>();
-        this.quickRatio = new Array<number>();
-        this.financialLeverage = new Array<number>();
-        this.debtEquity = new Array<number>();
+        this.currentRatio = null;
+        this.quickRatio = null;
+        this.financialLeverage = null;
+        this.debtEquity = null;
     }
 }

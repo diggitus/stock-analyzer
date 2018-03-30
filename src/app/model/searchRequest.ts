@@ -1,3 +1,6 @@
+/**
+ * Search Request Class.
+ */
 export class SearchRequest {
     stockExchange: string;
     symbol: string;

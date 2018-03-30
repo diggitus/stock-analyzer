@@ -17,6 +17,9 @@ import { Observable } from 'rxjs/Observable';
 
 /**
  * Financials service.
+ *
+ * @see http://financials.morningstar.com/financials/getFinancePart.html?t=XETR:ADS&region=usa&culture=en-US
+ * @see http://financials.morningstar.com/financials/getKeyStatPart.html?t=XETR:ADS&region=usa&culture=en-US
  */
 @Injectable()
 export class FinancialsService extends BaseService {
@@ -30,9 +33,6 @@ export class FinancialsService extends BaseService {
     private readonly financePart = 'getFinancePart';
     private readonly keyStatPart = 'getKeyStatPart';
 
-    private url1 = 'http://financials.morningstar.com/financials/getFinancePart.html?t=XETR:ADS&region=usa&culture=en-US';
-    private url2 = 'http://financials.morningstar.com/financials/getKeyStatPart.html?t=XETR:ADS&region=usa&culture=en-US';
-
     /**
      * Constructor
      */
@@ -42,9 +42,13 @@ export class FinancialsService extends BaseService {
         super();
     }
 
+    /**
+     * Returns the finance part.
+     * @param searchRequest The search request
+     */
     getFinancePart(searchRequest: SearchRequest): Observable<Finance | null> {
-        const url = `${this.baseUrl}/${this.type}/${this.financePart}.html?` +
-            `t=${searchRequest.stockExchange}:${searchRequest.symbol}` +
+        const url = `${this.baseUrl}/${this.type}/${this.financePart}.html` +
+            `?t=${searchRequest.stockExchange}:${searchRequest.symbol}` +
             `&region=${searchRequest.region}` +
             `&culture=${searchRequest.culture}`;
 
@@ -53,14 +57,19 @@ export class FinancialsService extends BaseService {
                 return this.parseFinancePart(<FinancialsApiResponse>resp);
             })
             .catch(error => {
+                console.error('Could not fetch finance part');
                 return Observable.of(null);
             });
     }
 
+    /**
+     * Parses the finance part response.
+     * @param resp The finance part response.
+     */
     private parseFinancePart(resp: FinancialsApiResponse): Finance {
         const finance = new Finance();
         const parser = new DOMParser();
-        const doc = parser.parseFromString(resp.componentData, 'text/html');
+        const doc = parser.parseFromString(resp.componentData, BaseService.CONTENT_TYPE_HTML);
         const tableRows = doc.querySelectorAll('tbody tr');
 
         finance.revenue = this.parseSingleItem(tableRows, 'Revenue');
@@ -82,46 +91,9 @@ export class FinancialsService extends BaseService {
         return finance;
     }
 
-    private parseSingleItem(tableRows: NodeListOf<Element>, label: string): Array<number> {
-        if (!tableRows) {
-            return new Array<number>();
-        }
-        const result = new Array<number>();
-
-        for (let i = 0; i < tableRows.length; i++) {
-            const tableRow = tableRows[i];
-
-            if (!tableRow.firstElementChild) {
-                continue;
-            }
-            const firstChildLabel = tableRow.firstElementChild.innerHTML;
-
-            if (firstChildLabel.indexOf(label) >= 0) {
-                const children = tableRow.children;
-
-                for (let j = 1; j < children.length; j++) {
-                    const childElem = children[j];
-
-                    try {
-                        let label = childElem.innerHTML;
-                        const idx = label.indexOf(',');
-
-                        if (idx >= 0) {
-                            label = label.slice(0, idx) + label.slice(idx + 1, label.length);
-                        }
-                        result.push(parseFloat(label));
-                    } catch (e) {
-                        continue;
-                    }
-                }
-            }
-        }
-        return result;
-    }
-
     getKeyStatPart(searchRequest: SearchRequest): Observable<KeyStat | null> {
-        const url = `${this.baseUrl}/${this.type}/${this.keyStatPart}.html?` +
-            `t=${searchRequest.stockExchange}:${searchRequest.symbol}` +
+        const url = `${this.baseUrl}/${this.type}/${this.keyStatPart}.html` +
+            `?t=${searchRequest.stockExchange}:${searchRequest.symbol}` +
             `&region=${searchRequest.region}` +
             `&culture=${searchRequest.culture}`;
 
@@ -138,31 +110,19 @@ export class FinancialsService extends BaseService {
                 return keyStat;
             })
             .catch(error => {
+                console.error('Could not fetch key stat part');
                 return Observable.of(null);
             });
     }
 
+    /**
+     * Parses the efficiency part of the key stat part.
+     * @param compData Content of the component data attribute of the response.
+     * @param tab The index of the tab content element.
+     */
     private parseEfficiency(compData: string, tab: number): Efficiency {
         const efficiency = new Efficiency();
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(compData, 'text/html');
-        const tabElements = doc.querySelectorAll('.tab_content');
-
-        if (!tabElements) {
-            return efficiency;
-        }
-        const efficiencyTab = tabElements[tab];
-        const tableElements = efficiencyTab.querySelectorAll('table');
-
-        if (!tableElements) {
-            return efficiency;
-        }
-        const efficiencyTable = tableElements[0];
-        const tableRows = efficiencyTable.querySelectorAll('tbody tr');
-
-        if (!tableRows) {
-            return efficiency;
-        }
+        const tableRows = this.getTableRows(compData, tab, 0);
 
         efficiency.daysSalesOutstanding = this.parseSingleItem(tableRows, 'Days Sales Outstanding');
         efficiency.daysInventory = this.parseSingleItem(tableRows, 'Days Inventory');
@@ -176,27 +136,14 @@ export class FinancialsService extends BaseService {
         return efficiency;
     }
 
+    /**
+     * Parses the cash flow ratios part of the key stat part.
+     * @param compData Content of the component data attribute of the response.
+     * @param tab The index of the tab content element.
+     */
     private parseCashFlowRatios(compData: string, tab: number): CashFlowRatios {
         const cashFlowRatios = new CashFlowRatios();
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(compData, 'text/html');
-        const tabElements = doc.querySelectorAll('.tab_content');
-
-        if (!tabElements) {
-            return cashFlowRatios;
-        }
-        const cashFlowRatiosTab = tabElements[tab];
-        const tableElements = cashFlowRatiosTab.querySelectorAll('table');
-
-        if (!tableElements) {
-            return cashFlowRatios;
-        }
-        const cashFlowRatiosTable = tableElements[0];
-        const tableRows = cashFlowRatiosTable.querySelectorAll('tbody tr');
-
-        if (!tableRows) {
-            return cashFlowRatios;
-        }
+        const tableRows = this.getTableRows(compData, tab, 0);
 
         cashFlowRatios.operatingCashFlowGrowth = this.parseSingleItem(tableRows, 'Operating Cash Flow Growth % YOY');
         cashFlowRatios.freeCashFlowGrowth = this.parseSingleItem(tableRows, 'Free Cash Flow Growth % YOY');
@@ -207,27 +154,14 @@ export class FinancialsService extends BaseService {
         return cashFlowRatios;
     }
 
+    /**
+     * Parses the balance sheet part of the key stat part.
+     * @param compData Content of the component data attribute of the response.
+     * @param tab The index of the tab content element.
+     */
     private parseBalanceSheetItems(compData: string, tab: number): BalanceSheetItems {
         const balanceSheetItems = new BalanceSheetItems();
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(compData, 'text/html');
-        const tabElements = doc.querySelectorAll('.tab_content');
-
-        if (!tabElements) {
-            return balanceSheetItems;
-        }
-        const balanceSheetTab = tabElements[tab];
-        const tableElements = balanceSheetTab.querySelectorAll('table');
-
-        if (!tableElements) {
-            return balanceSheetItems;
-        }
-        const balanceSheetTable = tableElements[0];
-        const tableRows = balanceSheetTable.querySelectorAll('tbody tr');
-
-        if (!tableRows) {
-            return balanceSheetItems;
-        }
+        const tableRows = this.getTableRows(compData, tab, 0);
 
         balanceSheetItems.cashShortItemInvestments = this.parseSingleItem(tableRows, 'Short-Term Investments');
         balanceSheetItems.accountsReceivable = this.parseSingleItem(tableRows, 'Accounts Receivable');
@@ -253,27 +187,14 @@ export class FinancialsService extends BaseService {
         return balanceSheetItems;
     }
 
+    /**
+     * Parses the liquidity health part of the key stat part.
+     * @param compData Content of the component data attribute of the response.
+     * @param tab The index of the tab content element.
+     */
     private parseLiquidityHealth(compData: string, tab: number): LiquidityHealth {
         const liquidityHealth = new LiquidityHealth();
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(compData, 'text/html');
-        const tabElements = doc.querySelectorAll('.tab_content');
-
-        if (!tabElements) {
-            return liquidityHealth;
-        }
-        const liquidityHealthTab = tabElements[tab];
-        const tableElements = liquidityHealthTab.querySelectorAll('table');
-
-        if (!tableElements) {
-            return liquidityHealth;
-        }
-        const liquidityHealthTable = tableElements[1];
-        const tableRows = liquidityHealthTable.querySelectorAll('tbody tr');
-
-        if (!tableRows) {
-            return liquidityHealth;
-        }
+        const tableRows = this.getTableRows(compData, tab, 1);
 
         liquidityHealth.currentRatio = this.parseSingleItem(tableRows, 'Current Ratio');
         liquidityHealth.quickRatio = this.parseSingleItem(tableRows, 'Quick Ratio');
@@ -281,6 +202,37 @@ export class FinancialsService extends BaseService {
         liquidityHealth.debtEquity = this.parseSingleItem(tableRows, 'Debt/Equity');
 
         return liquidityHealth;
+    }
+
+    /**
+     * Returns all table row elements.
+     * @param compData Content of the component data attribute of the response.
+     * @param tab The index of the tab content element.
+     * @param table The index of the table inside the tab content element.
+     */
+    private getTableRows(compData: string, tab: number, table: number): NodeListOf<Element> | null {
+        let tableRows = null;
+
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(compData, BaseService.CONTENT_TYPE_HTML);
+        const tabElements = doc.querySelectorAll('.tab_content');
+
+        if (!tabElements) {
+            return null;
+        }
+        const tabElement = tabElements[tab];
+        const tableElements = tabElement.querySelectorAll('table');
+
+        if (!tableElements) {
+            return null;
+        }
+        const tableElement = tableElements[table];
+        tableRows = tableElement.querySelectorAll('tbody tr');
+
+        if (!tableRows) {
+            return null;
+        }
+        return tableRows;
     }
 
 }

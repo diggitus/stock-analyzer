@@ -3,37 +3,40 @@
  * Be aware that the last item in the array is TTM!
  */
 export class Finance {
-    revenue: Array<number>; // in MIL
-    grossMargin: Array<number>; // %
-    operatingIncome: Array<number>; // MIL
-    operatingMargin: Array<number>; // %
-    netIncome: Array<number>; // MIL
-    earningsPerShare: Array<number>;
-    dividends: Array<number>;
-    payoutRatio: Array<number>; // %
-    shares: Array<number>; // MIL
-    bookValuePerShare: Array<number>;
-    operatingCashFlow: Array<number>; // MIL
-    capSpending: Array<number>; // MIL
-    freeCashFlow: Array<number>; // MIL
-    freeCashFlowPerShare: Array<number>;
-    workingCapital: Array<number>; // MIL
+    revenue: Array<number> | null; // in MIL
+    grossMargin: Array<number> | null; // %
+    operatingIncome: Array<number> | null; // MIL
+    operatingMargin: Array<number> | null; // %
+    netIncome: Array<number> | null; // MIL
+    earningsPerShare: Array<number> | null;
+    dividends: Array<number> | null;
+    payoutRatio: Array<number> | null; // %
+    shares: Array<number> | null; // MIL
+    bookValuePerShare: Array<number> | null;
+    operatingCashFlow: Array<number> | null; // MIL
+    capSpending: Array<number> | null; // MIL
+    freeCashFlow: Array<number> | null; // MIL
+    freeCashFlowPerShare: Array<number> | null;
+    workingCapital: Array<number> | null; // MIL
 
+    /**
+     * Constructor.
+     */
     constructor() {
-        this.revenue = new Array<number>();
-        this.grossMargin = new Array<number>();
-        this.operatingIncome = new Array<number>();
-        this.operatingMargin = new Array<number>();
-        this.netIncome = new Array<number>();
-        this.earningsPerShare = new Array<number>();
-        this.dividends = new Array<number>();
-        this.payoutRatio = new Array<number>();
-        this.shares = new Array<number>();
-        this.bookValuePerShare = new Array<number>();
-        this.operatingCashFlow = new Array<number>();
-        this.capSpending = new Array<number>();
-        this.freeCashFlow = new Array<number>();
-        this.freeCashFlowPerShare = new Array<number>();
-        this.workingCapital = new Array<number>();
+        this.revenue = null;
+        this.grossMargin = null;
+        this.operatingIncome = null;
+        this.operatingMargin = null;
+        this.netIncome = null;
+        this.earningsPerShare = null;
+        this.dividends = null;
+        this.payoutRatio = null;
+        this.shares = null;
+        this.bookValuePerShare = null;
+        this.operatingCashFlow = null;
+        this.capSpending = null;
+        this.freeCashFlow = null;
+        this.freeCashFlowPerShare = null;
+        this.workingCapital = null;
     }
 }

@@ -12,6 +12,9 @@ import { Observable } from 'rxjs/Observable';
 
 /**
  * Valuation service.
+ *
+ * @see http://financials.morningstar.com/valuate/current-valuation-list.action?&t=XETR:ads&region=usa&culture=en-US
+ * @see http://financials.morningstar.com/valuate/valuation-history.action?&t=XETR:ads&region="&G46&"&culture=en-US&cur=&type=price-earnings
  */
 @Injectable()
 export class ValuationService extends BaseService {
@@ -19,9 +22,6 @@ export class ValuationService extends BaseService {
     private readonly type = 'valuate';
     private readonly valuationList = 'current-valuation-list.action';
     private readonly valuationHistory = 'valuation-history.action';
-
-    private url1 = 'http://financials.morningstar.com/valuate/current-valuation-list.action?&t=XETR:ads&region=usa&culture=en-US';
-    private url2 = 'http://financials.morningstar.com/valuate/valuation-history.action?&t=XETR:ads&region="&G46&"&culture=en-US&cur=&type=price-earnings';
 
     /**
      * Constructor
@@ -37,18 +37,19 @@ export class ValuationService extends BaseService {
      * @param searchRequest The search request.
      */
     getValuationList(searchRequest: SearchRequest): Observable<Valuation | null> {
-        const url = `${this.baseUrl}/${this.type}/${this.valuationList}?` +
-            `t=${searchRequest.stockExchange}:${searchRequest.symbol}` +
+        const url = `${this.baseUrl}/${this.type}/${this.valuationList}` +
+            `?t=${searchRequest.stockExchange}:${searchRequest.symbol}` +
             `&region=${searchRequest.region}` +
             `&culture=${searchRequest.culture}`;
 
-        return this.http.get(url, { headers: this.getHtmlHeaders(), responseType: 'text' })
+        return this.http.get(url, { headers: this.getRequestHeaders(BaseService.CONTENT_TYPE_HTML), responseType: 'text' })
             .map(resp => {
                 const parser = new DOMParser();
-                const doc = parser.parseFromString(<string>resp, 'text/html');
+                const doc = parser.parseFromString(<string>resp, BaseService.CONTENT_TYPE_HTML);
                 return this.parseValuationList(doc.body);
             })
             .catch(error => {
+                console.error('Could not fetch valuation list');
                 return Observable.of(null);
             });
     }
@@ -123,19 +124,20 @@ export class ValuationService extends BaseService {
      * @param searchRequest The search request.
      */
     getvaluationHistory(searchRequest: SearchRequest): Observable<ValuationHistory | null> {
-        const url = `${this.baseUrl}/${this.type}/${this.valuationHistory}?` +
-            `t=${searchRequest.stockExchange}:${searchRequest.symbol}` +
+        const url = `${this.baseUrl}/${this.type}/${this.valuationHistory}` +
+            `?t=${searchRequest.stockExchange}:${searchRequest.symbol}` +
             `&region=${searchRequest.region}` +
             `&culture=${searchRequest.culture}` +
             `&type=price-earnings`;
 
-        return this.http.get(url, { headers: this.getHtmlHeaders(), responseType: 'text' })
+        return this.http.get(url, { headers: this.getRequestHeaders(BaseService.CONTENT_TYPE_HTML), responseType: 'text' })
             .map(resp => {
                 const parser = new DOMParser();
-                const doc = parser.parseFromString(<string>resp, 'text/html');
+                const doc = parser.parseFromString(<string>resp, BaseService.CONTENT_TYPE_HTML);
                 return this.parseValuationHistory(doc.body);
             })
             .catch(error => {
+                console.error('Could not fetch valuation history');
                 return Observable.of(null);
             });
     }
@@ -205,7 +207,5 @@ export class ValuationService extends BaseService {
         }
         return result;
     }
-
-
 
 }

@@ -3,6 +3,9 @@ import { CashFlowRatios } from 'app/model/cashFlowRatios';
 import { Efficiency } from 'app/model/efficiency';
 import { LiquidityHealth } from 'app/model/liquidityHealth';
 
+/**
+ * Key Stat Class.
+ */
 export class KeyStat {
     balanceSheetItems: BalanceSheetItems | null;
     cashFlowRatios: CashFlowRatios | null;

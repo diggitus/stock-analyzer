@@ -1,21 +1,27 @@
+/**
+ * Efficiency Class
+ */
 export class Efficiency {
-    daysSalesOutstanding: Array<number>;
-    daysInventory: Array<number>;
-    payablesPeriod: Array<number>;
-    cashConversionCycle: Array<number>;
-    receivablesTurnover: Array<number>;
-    inventoryTurnover: Array<number>;
-    fixedAssetsTurnover: Array<number>;
-    assetTurnover: Array<number>;
+    daysSalesOutstanding: Array<number> | null;
+    daysInventory: Array<number> | null;
+    payablesPeriod: Array<number> | null;
+    cashConversionCycle: Array<number> | null;
+    receivablesTurnover: Array<number> | null;
+    inventoryTurnover: Array<number> | null;
+    fixedAssetsTurnover: Array<number> | null;
+    assetTurnover: Array<number> | null;
 
+    /**
+     * Constructor.
+     */
     constructor() {
-        this.daysSalesOutstanding = new Array<number>();
-        this.daysInventory = new Array<number>();
-        this.payablesPeriod = new Array<number>();
-        this.cashConversionCycle = new Array<number>();
-        this.receivablesTurnover = new Array<number>();
-        this.inventoryTurnover = new Array<number>();
-        this.fixedAssetsTurnover = new Array<number>();
-        this.assetTurnover = new Array<number>();
+        this.daysSalesOutstanding = null;
+        this.daysInventory = null;
+        this.payablesPeriod = null;
+        this.cashConversionCycle = null;
+        this.receivablesTurnover = null;
+        this.inventoryTurnover = null;
+        this.fixedAssetsTurnover = null;
+        this.assetTurnover = null;
     }
 }

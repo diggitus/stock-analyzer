@@ -1,15 +1,21 @@
+/**
+ * Cash Flow Ratios Class
+ */
 export class CashFlowRatios {
-    operatingCashFlowGrowth: Array<number>;
-    freeCashFlowGrowth: Array<number>;
-    capExAOfSales: Array<number>;
-    freeCashFlowSales: Array<number>;
-    freeCashFlowNetIncome: Array<number>;
+    operatingCashFlowGrowth: Array<number> | null;
+    freeCashFlowGrowth: Array<number> | null;
+    capExAOfSales: Array<number> | null;
+    freeCashFlowSales: Array<number> | null;
+    freeCashFlowNetIncome: Array<number> | null;
 
+    /**
+     * Constructor.
+     */
     constructor() {
-        this.operatingCashFlowGrowth = new Array<number>();
-        this.freeCashFlowGrowth = new Array<number>();
-        this.capExAOfSales = new Array<number>();
-        this.freeCashFlowSales = new Array<number>();
-        this.freeCashFlowNetIncome = new Array<number>();
+        this.operatingCashFlowGrowth = null;
+        this.freeCashFlowGrowth = null;
+        this.capExAOfSales = null;
+        this.freeCashFlowSales = null;
+        this.freeCashFlowNetIncome = null;
     }
 }

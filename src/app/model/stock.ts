@@ -1,5 +1,8 @@
 import { Valuation } from 'app/model/valuation';
 
+/**
+ * Stock class.
+ */
 export class Stock {
     symbol: string;
     stockExhange: string;
@@ -8,6 +11,9 @@ export class Stock {
 
     valuation: Valuation;
 
+    /**
+     * Constructor.
+     */
     constructor() {
         this.symbol = '';
         this.stockExhange = 'XETR';

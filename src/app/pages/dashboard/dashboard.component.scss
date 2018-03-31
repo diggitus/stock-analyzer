@@ -1,0 +1,7 @@
+.list-item {
+    line-height: 1em;
+
+    & div:last-child {
+        font-size: .8em;
+    }
+}

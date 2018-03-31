@@ -1,5 +1,6 @@
 import { Finance } from 'app/model/finance';
 import { KeyStat } from 'app/model/keyStat';
+import { SearchRequest } from 'app/model/searchRequest';
 import { Valuation } from 'app/model/valuation';
 import { ValuationHistory } from 'app/model/valuationHistory';
 import { Action } from 'redux';
@@ -12,8 +13,14 @@ export interface PayloadAction extends Action {
 }
 
 export interface AppState {
+    searchState: HeaderState;
     valuationState: ValuationState;
     financialsState: FinancialsState;
+}
+
+export interface HeaderState {
+    type: string;
+    searchRequest: SearchRequest;
 }
 
 export interface ValuationState {

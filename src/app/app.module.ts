@@ -1,9 +1,6 @@
 import { DevToolsExtension, NgRedux } from '@angular-redux/store';
 import { NgReduxModule } from '@angular-redux/store/lib/src/ng-redux.module';
-import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { BrowserModule } from '@angular/platform-browser';
 import { AppState } from 'app/app.state';
 import { CoreModule } from 'app/core/core.module';
 import { PagesModule } from 'app/pages/pages.module';
@@ -22,9 +19,6 @@ import { ValuationService } from './services/valuation/valuation.service';
         AppComponent
     ],
     imports: [
-        BrowserModule,
-        FormsModule,
-        HttpClientModule,
         AppRoutingModule,
         NgReduxModule,
         CoreModule,

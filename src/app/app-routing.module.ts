@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { OverviewPageComponent } from 'app/pages/overview/overview-page.component';
+import { DashboardPageComponent } from 'app/pages/dashboard/dashboard-page.component';
 
 const routes: Routes = [
-    { path: '', redirectTo: 'overview', pathMatch: 'full' },
-    { path: 'overview', component: OverviewPageComponent }
+    { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+    { path: 'dashboard', component: DashboardPageComponent }
 ];
 
 @NgModule({

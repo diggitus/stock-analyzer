@@ -1,10 +1,16 @@
 <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
+
+    <!-- logo -->
     <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Stock Analyzer</a>
+
+    <!-- search input -->
     <input class="form-control form-control-dark w-100" type="text" placeholder="Symbol"
-        aria-label="Symbol">
+        aria-label="Symbol" [(ngModel)]="query" (keyup.enter)="onEnter()">
+
+    <!-- navigation -->
     <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
-            <a class="nav-link" href="#">Abmelden</a>
+            <a class="nav-link" href="#" (click)="onSearch($event)">Suchen</a>
         </li>
     </ul>
 </nav>

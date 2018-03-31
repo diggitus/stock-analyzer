@@ -6,7 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppState } from 'app/app.state';
 import { CoreModule } from 'app/core/core.module';
-import { OverviewPageComponent } from 'app/pages/overview-page.component';
+import { PagesModule } from 'app/pages/pages.module';
 import { rootReducer } from 'app/rootreducer';
 import { FinancialsActions } from 'app/services/financials/financials.actions';
 import { FinancialsService } from 'app/services/financials/financials.service';
@@ -19,8 +19,7 @@ import { ValuationService } from './services/valuation/valuation.service';
 
 @NgModule({
     declarations: [
-        AppComponent,
-        OverviewPageComponent
+        AppComponent
     ],
     imports: [
         BrowserModule,
@@ -28,7 +27,8 @@ import { ValuationService } from './services/valuation/valuation.service';
         HttpClientModule,
         AppRoutingModule,
         NgReduxModule,
-        CoreModule
+        CoreModule,
+        PagesModule
     ],
     providers: [
         ValuationService,

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { OverviewPageComponent } from 'app/pages/overview-page.component';
+import { OverviewPageComponent } from 'app/pages/overview/overview-page.component';
 
 const routes: Routes = [
     { path: '', redirectTo: 'overview', pathMatch: 'full' },

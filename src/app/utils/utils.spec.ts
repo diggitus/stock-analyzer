@@ -8,4 +8,18 @@ describe('Utils', () => {
         expect(curAvg).toBe(26.5);
     });
 
+    it('should return linear least squares', () => {
+        const values = [38.58, 38.42, 41.38, 46.60, 50.19, 57.54, 59.84];
+        const resList = Utils.findLineByLeastSquares(values);
+        expect(resList).not.toBeNull();
+        expect(resList![0]).toBe(35.63);
+        expect(resList![resList!.length - 1]).toBe(59.38);
+    })
+
+    it('should return equity growth', () => {
+        const values = [38.58, 38.42, 41.38, 46.60, 50.19, 57.54, 59.84];
+        const growth = Utils.equityGrowth(values);
+        expect(growth).toBe(66.66);
+    })
+
 });

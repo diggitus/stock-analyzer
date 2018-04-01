@@ -33,16 +33,14 @@ export class FinancialsActions {
         private ngRedux: NgRedux<AppState>,
         private financialsService: FinancialsService
     ) {
-        if (this.headerStateSubscription === null) {
-            this.headerStateSubscription = this.headerState.subscribe(state => {
-                const req = state.searchRequest;
+        this.headerStateSubscription = this.headerState.subscribe(state => {
+            const req = state.searchRequest;
 
-                if (req.symbol !== null) {
-                    this.updateFinance(req);
-                    this.updateKeyStat(req);
-                }
-            });
-        }
+            if (req.symbol !== null) {
+                this.updateFinance(req);
+                this.updateKeyStat(req);
+            }
+        });
     }
 
     /**

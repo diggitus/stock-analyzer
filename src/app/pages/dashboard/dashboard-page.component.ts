@@ -2,6 +2,7 @@ import { select } from '@angular-redux/store';
 import { Component, OnInit } from '@angular/core';
 import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
 import { FinancialsState, HeaderState, ValuationState } from 'app/app.state';
+import { Finance } from 'app/model/finance';
 import { Valuation } from 'app/model/valuation';
 import { ValuationHistory } from 'app/model/valuationHistory';
 import { FinancialsActions } from 'app/services/financials/financials.actions';
@@ -22,7 +23,6 @@ const LAST_YEARS = 6;
 })
 export class DashboardPageComponent implements OnInit, OnDestroy {
 
-
     @select() valuationState: Observable<ValuationState>;
     @select() financialsState: Observable<FinancialsState>;
     @select() headerState: Observable<HeaderState>;
@@ -34,12 +34,14 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
     valuation5y: any;
     valuationHistory: any;
 
+    finance: any;
+
     /**
      * Constructor.
      */
     constructor(
         private valuationActions: ValuationActions,
-        private financialsActions: FinancialsActions
+        private financialsActions: FinancialsActions,
     ) { }
 
     /**
@@ -53,7 +55,7 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
         });
 
         this.financialsStateSubscription = this.financialsState.subscribe(state => {
-
+            this.finance = this.getFinanceValues(state.finance);
         });
     }
 
@@ -156,6 +158,20 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
                 de: 'Cash Flow (6-Jahre)',
                 en: 'price / cash flow',
                 value: Utils.calcAvg(Utils.getLastElements(valuationHistory.priceCashFlow, LAST_YEARS))
+            }
+        ];
+    }
+
+    /**
+     * Returns object with finance values.
+     * @param finance Contains finance data.
+     */
+    private getFinanceValues(finance: Finance): any {
+        return [
+            {
+                de: 'Wachstum Eigenkapital',
+                en: 'equity growth',
+                value: Utils.equityGrowth(finance.bookValuePerShare) + ' %'
             }
         ];
     }

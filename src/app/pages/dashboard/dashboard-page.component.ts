@@ -6,8 +6,11 @@ import { Valuation } from 'app/model/valuation';
 import { ValuationHistory } from 'app/model/valuationHistory';
 import { FinancialsActions } from 'app/services/financials/financials.actions';
 import { ValuationActions } from 'app/services/valuation/valuation.actions';
+import { Utils } from 'app/utils/utils';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
+
+const LAST_YEARS = 6;
 
 /**
  * This class represents the dashboard page component.
@@ -19,6 +22,7 @@ import { Subscription } from 'rxjs/Subscription';
 })
 export class DashboardPageComponent implements OnInit, OnDestroy {
 
+
     @select() valuationState: Observable<ValuationState>;
     @select() financialsState: Observable<FinancialsState>;
     @select() headerState: Observable<HeaderState>;
@@ -27,6 +31,7 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
     private financialsStateSubscription: Subscription;
 
     valuation: any;
+    valuation5y: any;
     valuationHistory: any;
 
     /**
@@ -43,6 +48,7 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.valuationStateSubscription = this.valuationState.subscribe(state => {
             this.valuation = this.getValuationValues(state.valuation);
+            this.valuation5y = this.getValuation5yValues(state.valuation);
             this.valuationHistory = this.getValuationHistoryValues(state.valuationHistory);
         });
 
@@ -89,7 +95,37 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
             {
                 de: 'Dividendenrendite',
                 en: 'dividend yield',
-                value: valuation.dividendYield
+                value: valuation.dividendYield + ' %'
+            }
+        ];
+    }
+
+    /**
+     * Returns an object with valuation data of last 5-years.
+     * @param valuation The valuation data.
+     * @return object with valuation values.
+     */
+    private getValuation5yValues(valuation: Valuation): any {
+        return [
+            {
+                de: 'KGV',
+                en: 'price / earnings',
+                value: valuation.priceEarnings5yAvg
+            },
+            {
+                de: 'KBV',
+                en: 'price / book',
+                value: valuation.priceBook5yAvg
+            },
+            {
+                de: 'KUV',
+                en: 'price / sales',
+                value: valuation.priceSales5yAvg
+            },
+            {
+                de: 'Dividendenrendite',
+                en: 'dividend yield',
+                value: valuation.dividendYield5yAvg + ' %'
             }
         ];
     }
@@ -102,39 +138,26 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
     private getValuationHistoryValues(valuationHistory: ValuationHistory): any {
         return [
             {
-                de: 'KGV',
+                de: 'KGV (6-Jahre)',
                 en: 'price / earnings',
-                value: this.calcAvg(valuationHistory.priceEarnings)
+                value: Utils.calcAvg(Utils.getLastElements(valuationHistory.priceEarnings, LAST_YEARS))
             },
             {
-                de: 'KBV',
+                de: 'KBV (6-Jahre)',
                 en: 'price / book',
-                value: this.calcAvg(valuationHistory.priceBook)
+                value: Utils.calcAvg(Utils.getLastElements(valuationHistory.priceBook, LAST_YEARS))
             },
             {
-                de: 'KUV',
+                de: 'KUV (6-Jahre)',
                 en: 'price / sales',
-                value: this.calcAvg(valuationHistory.priceSales)
+                value: Utils.calcAvg(Utils.getLastElements(valuationHistory.priceSales, LAST_YEARS))
             },
             {
-                de: 'Cash Flow',
+                de: 'Cash Flow (6-Jahre)',
                 en: 'price / cash flow',
-                value: this.calcAvg(valuationHistory.priceCashFlow)
+                value: Utils.calcAvg(Utils.getLastElements(valuationHistory.priceCashFlow, LAST_YEARS))
             }
         ];
-    }
-
-    /**
-     * Calculates the average value of the given list item values.
-     * @param valueList The item list.
-     * @return average value.
-     */
-    private calcAvg(valueList: Array<number> | null): number | null {
-        if (valueList) {
-            const avgValue = valueList.reduce((prevValue: number, curValue: number) => prevValue + curValue) / valueList.length;
-            return Math.round(avgValue * 100) / 100;
-        }
-        return null;
     }
 
 }

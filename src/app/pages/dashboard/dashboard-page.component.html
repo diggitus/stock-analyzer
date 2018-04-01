@@ -1,5 +1,7 @@
 <ng-container *ngIf="(headerState | async) as headerState">
     <div class="card-deck" *ngIf="headerState.searchRequest.symbol">
+
+        <!-- stock info -->
         <div class="card">
             <div class="card-header">
                 Aktie
@@ -11,6 +13,7 @@
             </div>
         </div>
 
+        <!-- valuation -->
         <div class="card">
             <div class="card-header">
                 Aktuelle Werte
@@ -27,8 +30,28 @@
                 </ng-container>
             </ul>
         </div>
+
+        <!-- valuation 5-years -->
+        <div class="card">
+            <div class="card-header">
+                Aktuelle Werte (5-Jahre)
+            </div>
+            <ul class="list-group list-group-flush">
+                <ng-container *ngFor="let valuationValue of valuation5y">
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <div class="list-item">
+                            <div>{{ valuationValue.de }}</div>
+                            <div class="text-muted">{{ valuationValue.en }}</div>
+                        </div>
+                        <span>{{ valuationValue.value }}</span>
+                    </li>
+                </ng-container>
+            </ul>
+        </div>
+
     </div>
 
+    <!-- valuation history 6-years -->
     <div class="row">
         <ng-container *ngFor="let valuationHistoryValue of valuationHistory">
             <div class="col-12 col-md-6 col-lg-3">

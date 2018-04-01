@@ -187,7 +187,7 @@ export class ValuationService extends BaseService {
             if (!siblingElem) {
                 return new Array<number>();
             }
-            const rowData = siblingElem.querySelectorAll('.row_data');
+            const rowData = siblingElem.querySelectorAll('td');
 
             for (let j = 0; j < rowData.length; j++) {
                 const val = rowData[j];

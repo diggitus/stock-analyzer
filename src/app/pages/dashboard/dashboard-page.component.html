@@ -16,16 +16,31 @@
                 Aktuelle Werte
             </div>
             <ul class="list-group list-group-flush">
-                <ng-container *ngFor="let currentValue of currentValues">
+                <ng-container *ngFor="let valuationValue of valuation">
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         <div class="list-item">
-                            <div>{{ currentValue.de }}</div>
-                            <div class="text-muted">{{ currentValue.en }}</div>
+                            <div>{{ valuationValue.de }}</div>
+                            <div class="text-muted">{{ valuationValue.en }}</div>
                         </div>
-                        <span>{{ currentValue.value }}</span>
+                        <span>{{ valuationValue.value }}</span>
                     </li>
                 </ng-container>
             </ul>
         </div>
+    </div>
+
+    <div class="row">
+        <ng-container *ngFor="let valuationHistoryValue of valuationHistory">
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="card">
+                    <div class="card-header">
+                        {{ valuationHistoryValue.de }}
+                    </div>
+                    <div class="card-body">
+                        <p>{{ valuationHistoryValue.value }}</p>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
     </div>
 </ng-container>

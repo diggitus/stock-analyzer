@@ -16,34 +16,15 @@
                 Aktuelle Werte
             </div>
             <ul class="list-group list-group-flush">
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <div class="list-item">
-                        <div>KGV</div>
-                        <div class="text-muted">price / earnings</div>
-                    </div>
-                    <span>{{priceEarnings}}</span>
-                </li>
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <div class="list-item">
-                        <div>KBV</div>
-                        <div class="text-muted">price / book</div>
-                    </div>
-                    <span>{{priceBook}}</span>
-                </li>
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <div class="list-item">
-                        <div>KUV</div>
-                        <div class="text-muted">price / sales</div>
-                    </div>
-                    <span>{{priceSales}}</span>
-                </li>
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <div class="list-item">
-                        <div>Dividendenrendite</div>
-                        <div class="text-muted">dividend yield</div>
-                    </div>
-                    <span>{{dividendYield}}</span>
-                </li>
+                <ng-container *ngFor="let currentValue of currentValues">
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <div class="list-item">
+                            <div>{{ currentValue.de }}</div>
+                            <div class="text-muted">{{ currentValue.en }}</div>
+                        </div>
+                        <span>{{ currentValue.value }}</span>
+                    </li>
+                </ng-container>
             </ul>
         </div>
     </div>

@@ -2,6 +2,7 @@ import { select } from '@angular-redux/store';
 import { Component, OnInit } from '@angular/core';
 import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
 import { FinancialsState, HeaderState, ValuationState } from 'app/app.state';
+import { Valuation } from 'app/model/valuation';
 import { FinancialsActions } from 'app/services/financials/financials.actions';
 import { ValuationActions } from 'app/services/valuation/valuation.actions';
 import { Observable } from 'rxjs/Observable';
@@ -24,10 +25,7 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
     private valuationStateSubscription: Subscription;
     private financialsStateSubscription: Subscription;
 
-    priceEarnings: number | null;
-    priceBook: number | null;
-    priceSales: number | null;
-    dividendYield: number | null;
+    currentValues: any;
 
     /**
      * Constructor.
@@ -42,10 +40,7 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
      */
     ngOnInit() {
         this.valuationStateSubscription = this.valuationState.subscribe(state => {
-            this.priceEarnings = state.valuation.priceEarnings;
-            this.priceBook = state.valuation.priceBook;
-            this.priceSales = state.valuation.priceSales;
-            this.dividendYield = state.valuation.dividendYield;
+            this.currentValues = this.getCurrentValues(state.valuation);
         });
 
         this.financialsStateSubscription = this.financialsState.subscribe(state => {
@@ -64,6 +59,35 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
         if (this.financialsStateSubscription) {
             this.financialsStateSubscription.unsubscribe();
         }
+    }
+
+    /**
+     * Returns an object with current values of the stock.
+     * @param valuation The valuation data.
+     */
+    private getCurrentValues(valuation: Valuation): any {
+        return [
+            {
+                de: 'KGV',
+                en: 'price / earnings',
+                value: valuation.priceEarnings
+            },
+            {
+                de: 'KBV',
+                en: 'price / book',
+                value: valuation.priceBook
+            },
+            {
+                de: 'KUV',
+                en: 'price / sales',
+                value: valuation.priceSales
+            },
+            {
+                de: 'Dividendenrendite',
+                en: 'dividend yield',
+                value: valuation.dividendYield
+            }
+        ];
     }
 
 }

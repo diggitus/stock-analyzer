@@ -142,22 +142,22 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
             {
                 de: 'KGV (6-Jahre)',
                 en: 'price / earnings',
-                value: Utils.calcAvg(Utils.getLastElements(valuationHistory.priceEarnings, LAST_YEARS))
+                value: Utils.calcAvg(Utils.lastElements(valuationHistory.priceEarnings, LAST_YEARS))
             },
             {
                 de: 'KBV (6-Jahre)',
                 en: 'price / book',
-                value: Utils.calcAvg(Utils.getLastElements(valuationHistory.priceBook, LAST_YEARS))
+                value: Utils.calcAvg(Utils.lastElements(valuationHistory.priceBook, LAST_YEARS))
             },
             {
                 de: 'KUV (6-Jahre)',
                 en: 'price / sales',
-                value: Utils.calcAvg(Utils.getLastElements(valuationHistory.priceSales, LAST_YEARS))
+                value: Utils.calcAvg(Utils.lastElements(valuationHistory.priceSales, LAST_YEARS))
             },
             {
                 de: 'Cash Flow (6-Jahre)',
                 en: 'price / cash flow',
-                value: Utils.calcAvg(Utils.getLastElements(valuationHistory.priceCashFlow, LAST_YEARS))
+                value: Utils.calcAvg(Utils.lastElements(valuationHistory.priceCashFlow, LAST_YEARS))
             }
         ];
     }

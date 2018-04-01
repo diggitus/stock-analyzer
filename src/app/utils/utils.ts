@@ -22,7 +22,7 @@ export class Utils {
      * @param size The size of the list after execution of this function.
      * @return sliced list.
      */
-    static getLastElements(valueList: Array<number> | null, size: number, withTTM = false): Array<number> | null {
+    static lastElements(valueList: Array<number> | null, size: number, withTTM = false): Array<number> | null {
         if (valueList) {
             const startIdx = Math.max(valueList.length - (withTTM ? 0 : 1) - size);
             const endIdx = valueList.length - (withTTM ? 0 : 1);
@@ -41,7 +41,7 @@ export class Utils {
             return null;
         }
 
-        const trend = Utils.findLineByLeastSquares(Utils.getLastElements(bookPerShare, 6, true));
+        const trend = Utils.trend(Utils.lastElements(bookPerShare, 7, true));
         if (trend) {
             const growth = trend[trend.length - 1] / trend[0] - 1;
             return Utils.round(growth * 100);
@@ -50,11 +50,11 @@ export class Utils {
     }
 
     /**
-     * Finds line by least squares.
+     * Calculates linear least squares.
      * @param valueList List with value items.
      * @return list with line value.
      */
-    static findLineByLeastSquares(valueList: Array<number> | null): Array<number> | null {
+    static trend(valueList: Array<number> | null): Array<number> | null {
         if (!valueList) {
             return null;
         }

@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
 import { FinancialsState, HeaderState, ValuationState } from 'app/app.state';
 import { Finance } from 'app/model/finance';
+import { KeyStat } from 'app/model/keyStat';
 import { Valuation } from 'app/model/valuation';
 import { ValuationHistory } from 'app/model/valuationHistory';
 import { FinancialsActions } from 'app/services/financials/financials.actions';
@@ -35,6 +36,7 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
     valuationHistory: any;
 
     finance: any;
+    keyStat: any;
 
     /**
      * Constructor.
@@ -56,6 +58,7 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
 
         this.financialsStateSubscription = this.financialsState.subscribe(state => {
             this.finance = this.getFinanceValues(state.finance);
+            this.keyStat = this.getKeyStatValues(state.keyStat);
         });
     }
 
@@ -142,22 +145,22 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
             {
                 de: 'KGV (6-Jahre)',
                 en: 'price / earnings',
-                value: Utils.calcAvg(Utils.lastElements(valuationHistory.priceEarnings, LAST_YEARS))
+                value: Utils.calcAvg(Utils.sublist(valuationHistory.priceEarnings, LAST_YEARS))
             },
             {
                 de: 'KBV (6-Jahre)',
                 en: 'price / book',
-                value: Utils.calcAvg(Utils.lastElements(valuationHistory.priceBook, LAST_YEARS))
+                value: Utils.calcAvg(Utils.sublist(valuationHistory.priceBook, LAST_YEARS))
             },
             {
                 de: 'KUV (6-Jahre)',
                 en: 'price / sales',
-                value: Utils.calcAvg(Utils.lastElements(valuationHistory.priceSales, LAST_YEARS))
+                value: Utils.calcAvg(Utils.sublist(valuationHistory.priceSales, LAST_YEARS))
             },
             {
                 de: 'Cash Flow (6-Jahre)',
                 en: 'price / cash flow',
-                value: Utils.calcAvg(Utils.lastElements(valuationHistory.priceCashFlow, LAST_YEARS))
+                value: Utils.calcAvg(Utils.sublist(valuationHistory.priceCashFlow, LAST_YEARS))
             }
         ];
     }
@@ -165,6 +168,7 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
     /**
      * Returns object with finance values.
      * @param finance Contains finance data.
+     * @return object with finance values.
      */
     private getFinanceValues(finance: Finance): any {
         return [
@@ -172,6 +176,26 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
                 de: 'Wachstum Eigenkapital',
                 en: 'equity growth',
                 value: Utils.equityGrowth(finance.bookValuePerShare) + ' %'
+            }
+        ];
+    }
+
+    /**
+     * Returns object with key stat values.
+     * @param keyStat Contains key stat data.
+     * @return object with key stat values.
+     */
+    private getKeyStatValues(keyStat: KeyStat): any {
+        return [
+            {
+                de: 'Eigenkapitalquote',
+                en: 'equity ratio',
+                value: keyStat.balanceSheetItems ? Utils.equityRatio(keyStat.balanceSheetItems.totalStockholdersEquity) + ' %' : null
+            },
+            {
+                de: 'Kapitalumschlag',
+                en: 'asset turnover',
+                value: keyStat.efficiency ? Utils.assetTurnover(keyStat.efficiency.assetTurnover) : null
             }
         ];
     }

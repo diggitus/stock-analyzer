@@ -17,16 +17,43 @@ export class Utils {
     }
 
     /**
-     * Slices given value list.
+     * Returns sublist of given value list.
      * @param valueList The list with value items.
      * @param size The size of the list after execution of this function.
-     * @return sliced list.
+     * @return sublist.
      */
-    static lastElements(valueList: Array<number> | null, size: number, withTTM = false): Array<number> | null {
+    static sublist(valueList: Array<number> | null, size: number, withTTM = false): Array<number> | null {
         if (valueList) {
             const startIdx = Math.max(valueList.length - (withTTM ? 0 : 1) - size);
             const endIdx = valueList.length - (withTTM ? 0 : 1);
             return valueList.slice(startIdx, endIdx);
+        }
+        return null;
+    }
+
+    /**
+     * Returns the equity ratio.
+     * @param totalStockholdersEquity The total stockholders equity (dt. Eigenkapital).
+     * @return equityRatio (dt. Eigenkapitalquote).
+     */
+    static equityRatio(totalStockholdersEquity: Array<number> | null): number | null {
+        if (totalStockholdersEquity) {
+            return totalStockholdersEquity[totalStockholdersEquity.length - 1];
+        }
+        return null;
+    }
+
+    /**
+     * Returns asset turnover of the last 12 months.
+     * @param assetTurnover The asset turnover values.
+     * @return asset turnover (dt. Kapitalumschlag) of the last 12 months. 
+     */
+    static assetTurnover(assetTurnover: Array<number> | null): number | null {
+        if (assetTurnover) {
+            const trend = Utils.trend(Utils.sublist(assetTurnover, 7, true));
+            if (trend) {
+                return Utils.round(trend[trend.length - 1]);
+            }
         }
         return null;
     }
@@ -37,14 +64,12 @@ export class Utils {
      * @return equity growth.
      */
     static equityGrowth(bookPerShare: Array<number> | null): number | null {
-        if (!bookPerShare) {
-            return null;
-        }
-
-        const trend = Utils.trend(Utils.lastElements(bookPerShare, 7, true));
-        if (trend) {
-            const growth = trend[trend.length - 1] / trend[0] - 1;
-            return Utils.round(growth * 100);
+        if (bookPerShare) {
+            const trend = Utils.trend(Utils.sublist(bookPerShare, 7, true));
+            if (trend) {
+                const growth = trend[trend.length - 1] / trend[0] - 1;
+                return Utils.round(growth * 100);
+            }
         }
         return null;
     }

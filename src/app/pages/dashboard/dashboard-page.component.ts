@@ -6,8 +6,10 @@ import { Finance } from 'app/model/finance';
 import { KeyStat } from 'app/model/keyStat';
 import { Valuation } from 'app/model/valuation';
 import { ValuationHistory } from 'app/model/valuationHistory';
+import { Value } from 'app/model/value';
 import { FinancialsActions } from 'app/services/financials/financials.actions';
 import { ValuationActions } from 'app/services/valuation/valuation.actions';
+import { Constants } from 'app/utils/constants';
 import { Utils } from 'app/utils/utils';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
@@ -37,13 +39,17 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
     finance: any;
     keyStat: any;
 
+    typePerc: number;
+
     /**
      * Constructor.
      */
     constructor(
         private valuationActions: ValuationActions,
         private financialsActions: FinancialsActions,
-    ) { }
+    ) {
+        this.typePerc = Constants.TYPE_PERC;
+    }
 
     /**
      * OnInit handler.
@@ -169,14 +175,8 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
      * @param finance Contains finance data.
      * @return object with finance values.
      */
-    private getFinanceValues(finance: Finance): any {
-        return [
-            {
-                de: 'Wachstum Eigenkapital',
-                en: 'equity growth',
-                value: Utils.equityGrowth(finance.bookValuePerShare) + ' %'
-            }
-        ];
+    private getFinanceValues(finance: Finance): Array<Value> {
+        return new Array<Value>(Utils.equityGrowth(finance.bookValuePerShare));
     }
 
     /**
@@ -184,54 +184,30 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
      * @param keyStat Contains key stat data.
      * @return object with key stat values.
      */
-    private getKeyStatValues(keyStat: KeyStat): any {
-        return [
-            {
-                de: 'Eigenkapitalquote',
-                en: 'equity ratio',
-                value: keyStat.balanceSheetItems ? Utils.equityRatio(keyStat.balanceSheetItems.totalStockholdersEquity) + ' %' : null
-            },
-            {
-                de: 'Kapitalumschlag',
-                en: 'asset turnover',
-                value: keyStat.efficiency ? Utils.assetTurnover(keyStat.efficiency.assetTurnover) : null
-            },
-            {
-                de: 'Liquiditätsgrad',
-                en: 'current ratio',
-                value: keyStat.liquidityHealth ? Utils.currentRatio(keyStat.liquidityHealth.currentRatio) : null
-            },
-            {
-                de: 'Verschuldungsgrad',
-                en: 'debt / equity',
-                value: keyStat.liquidityHealth ? Utils.debtEquity(keyStat.liquidityHealth.debtEquity) : null
-            },
-            {
-                de: 'Goodwill / Assets',
-                en: 'intangibles',
-                value: keyStat.balanceSheetItems ? Utils.intangibles(keyStat.balanceSheetItems.intangibles) : null
-            },
-            {
-                de: 'Inventar',
-                en: 'inventory',
-                value: keyStat.balanceSheetItems ? Utils.inventory(keyStat.balanceSheetItems.inventory) : null
-            },
-            {
-                de: 'Eigenkapitalrendite',
-                en: 'return on equity (RoE)',
-                value: keyStat.profitability ? Utils.returnOnEquity(keyStat.profitability.returnOnEquity) : null
-            },
-            {
-                de: 'Gesamtkapitalrendite',
-                en: 'return on assets (RoA)',
-                value: keyStat.profitability ? Utils.returnOnAssets(keyStat.profitability.returnOnAssets) : null
-            },
-            {
-                de: 'Kapitalrendite',
-                en: 'return on capital employed (ROCE)',
-                value: keyStat.profitability ? Utils.returnOnCapitalEmployed(keyStat.profitability.returnOnInvestedCapital) : null
-            }
-        ];
+    private getKeyStatValues(keyStat: KeyStat): Array<Value> {
+        const result = new Array<Value>();
+
+        if (keyStat.balanceSheetItems) {
+            result.push(Utils.equityRatio(keyStat.balanceSheetItems.totalStockholdersEquity));
+            result.push(Utils.intangibles(keyStat.balanceSheetItems.intangibles));
+            result.push(Utils.inventory(keyStat.balanceSheetItems.inventory));
+        }
+
+        if (keyStat.efficiency) {
+            result.push(Utils.assetTurnover(keyStat.efficiency.assetTurnover));
+        }
+
+        if (keyStat.liquidityHealth) {
+            result.push(Utils.currentRatio(keyStat.liquidityHealth.currentRatio));
+            result.push(Utils.debtEquity(keyStat.liquidityHealth.debtEquity));
+        }
+
+        if (keyStat.profitability) {
+            result.push(Utils.returnOnEquity(keyStat.profitability.returnOnEquity));
+            result.push(Utils.returnOnAssets(keyStat.profitability.returnOnAssets));
+            result.push(Utils.returnOnCapitalEmployed(keyStat.profitability.returnOnInvestedCapital));
+        }
+        return result;
     }
 
 }

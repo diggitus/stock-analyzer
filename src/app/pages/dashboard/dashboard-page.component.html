@@ -61,10 +61,11 @@
         <ng-container *ngFor="let financeValue of finance">
             <div class="card">
                 <div class="card-header">
-                    <app-headline [deu]="financeValue.de" [eng]="financeValue.en"></app-headline>
+                    <app-headline [deu]="financeValue.deu" [eng]="financeValue.eng"></app-headline>
                 </div>
                 <div class="card-body">
                     {{ financeValue.value }}
+                    <span *ngIf="financeValue.type === typePerc">%</span>
                 </div>
             </div>
         </ng-container>
@@ -72,10 +73,11 @@
         <ng-container *ngFor="let keyStatValue of keyStat">
             <div class="card">
                 <div class="card-header">
-                    <app-headline [deu]="keyStatValue.de" [eng]="keyStatValue.en"></app-headline>
+                    <app-headline [deu]="keyStatValue.deu" [eng]="keyStatValue.eng"></app-headline>
                 </div>
                 <div class="card-body">
                     {{ keyStatValue.value }}
+                    <span *ngIf="keyStatValue.type === typePerc">%</span>
                 </div>
             </div>
         </ng-container>

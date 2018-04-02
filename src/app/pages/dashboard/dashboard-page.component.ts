@@ -196,6 +196,26 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
                 de: 'Kapitalumschlag',
                 en: 'asset turnover',
                 value: keyStat.efficiency ? Utils.assetTurnover(keyStat.efficiency.assetTurnover) : null
+            },
+            {
+                de: 'Liquiditätsgrad',
+                en: 'current ratio',
+                value: keyStat.liquidityHealth ? Utils.currentRatio(keyStat.liquidityHealth.currentRatio) : null
+            },
+            {
+                de: 'Verschuldungsgrad',
+                en: 'debt / equity',
+                value: keyStat.liquidityHealth ? Utils.debtEquity(keyStat.liquidityHealth.debtEquity) : null
+            },
+            {
+                de: 'Goodwill / Assets',
+                en: 'intangibles',
+                value: keyStat.balanceSheetItems ? Utils.intangibles(keyStat.balanceSheetItems.intangibles) : null
+            },
+            {
+                de: 'Inventar',
+                en: 'inventory',
+                value: keyStat.balanceSheetItems ? Utils.inventory(keyStat.balanceSheetItems.inventory) : null
             }
         ];
     }

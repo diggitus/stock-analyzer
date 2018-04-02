@@ -22,7 +22,7 @@ export class Utils {
      * @param size The size of the list after execution of this function.
      * @return sublist.
      */
-    static sublist(valueList: Array<number> | null, size: number, withTTM = false): Array<number> | null {
+    static sublist<T>(valueList: Array<T> | null, size: number, withTTM = false): Array<T> | null {
         if (valueList) {
             const startIdx = Math.max(valueList.length - (withTTM ? 0 : 1) - size);
             const endIdx = valueList.length - (withTTM ? 0 : 1);
@@ -61,7 +61,7 @@ export class Utils {
     /**
      * Returns equity growth in %.
      * @param bookPerShare List with book of share values.
-     * @return equity growth.
+     * @return equity growth (dt. Wachstum Eigenkapital).
      */
     static equityGrowth(bookPerShare: Array<number> | null): number | null {
         if (bookPerShare) {
@@ -70,6 +70,90 @@ export class Utils {
                 const growth = trend[trend.length - 1] / trend[0] - 1;
                 return Utils.round(growth * 100);
             }
+        }
+        return null;
+    }
+
+    /**
+     * Returns the current ratio.
+     * @param currentRatio List with current ratio values.
+     * @return current ratio (dt. Liquiditätsgrad).
+     */
+    static currentRatio(currentRatio: Array<number> | null): number | null {
+        if (currentRatio) {
+            return Utils.round(Utils.lastItem(currentRatio));
+        }
+        return null;
+    }
+
+    /**
+     * Returns the debt equity.
+     * @param debtEquity The debt and equity (dt. Schulden und Eigenkapital).
+     * @return debt equity (dt. Verschuldungsgrad).
+     */
+    static debtEquity(debtEquity: Array<number> | null): number | null {
+        if (debtEquity) {
+            return Utils.round(Utils.lastItem(debtEquity));
+        }
+        return null;
+    }
+
+    /**
+     * Returns the intangibles (Goodwill / Assets).
+     * @param intangibles List with intangible values.
+     * @return intangibles (dt. Anteil immaterieller Vermögenswerte).
+     */
+    static intangibles(intangibles: Array<number> | null): number | null {
+        if (intangibles) {
+            return Utils.round(Utils.lastItem(intangibles));
+        }
+        return null;
+    }
+
+    /**
+     * Returns the inventory.
+     * @param inventory List with inventory values.
+     * @return inventory (dt. Inventar).
+     */
+    static inventory(inventory: Array<number> | null): number | null {
+        if (inventory) {
+            return Utils.round(Utils.lastItem(inventory));
+        }
+        return null;
+    }
+
+    /**
+     * Returns the RoE.
+     * @param returnOnEquity List with return on equity values.
+     * @return return on equity (dt. Eigenkapitalrendite).
+     */
+    static returnOnEquity(returnOnEquity: Array<number> | null): number | null {
+        if (returnOnEquity) {
+            return Utils.round(Utils.lastItem(returnOnEquity));
+        }
+        return null;
+    }
+
+    /**
+     * Returns the RoA.
+     * @param returnOnAssets List with return on assets values.
+     * @return return on assets (dt. Gesamtkapitalrendite).
+     */
+    static returnOnAssets(returnOnAssets: Array<number> | null): number | null {
+        if (returnOnAssets) {
+            return Utils.round(Utils.lastItem(returnOnAssets));
+        }
+        return null;
+    }
+
+    /**
+     * Returns the ROCE.
+     * @param roce List with roce values.
+     * @return return on capital employed (dt. Kapitalrendite).
+     */
+    static returnOnCapitalEmployed(returnOnInvestedCapital: Array<number> | null): number | null {
+        if (returnOnInvestedCapital) {
+            return Utils.round(Utils.lastItem(returnOnInvestedCapital));
         }
         return null;
     }
@@ -156,5 +240,14 @@ export class Utils {
      */
     static round(val: number): number {
         return Math.round(val * 100) / 100;
+    }
+
+    /**
+     * Returns the last item of the given list.
+     * @param values The list
+     * @return last item of the given list.
+     */
+    static lastItem<T>(values: Array<T>): T {
+        return values[values.length - 1];
     }
 }

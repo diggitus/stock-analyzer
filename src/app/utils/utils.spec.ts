@@ -35,4 +35,46 @@ describe('Utils', () => {
         expect(assetTurnover).toBe(1.42);
     })
 
+    it('should return the current ratio', () => {
+        const values = [1.35, 1.58, 1.50, 1.50, 1.57, 1.45, 1.68, 1.40, 1.31, 1.37, 1.37];
+        const currentRatio = Utils.currentRatio(values);
+        expect(currentRatio).toBe(1.37);
+    })
+
+    it('should return the debt equity', () => {
+        const values = [0.52, 0.42, 0.29, 0.18, 0.23, 0.12, 0.28, 0.26, 0.15, 0.15, 0.15];
+        const debtEquity = Utils.debtEquity(values);
+        expect(debtEquity).toBe(0.15);
+    });
+
+    it('should return the intangibles', () => {
+        const values = [32.45, 33.58, 29.46, 28.50, 25.17, 24.03, 22.26, 24.04, 21.47, 18.48, 18.48];
+        const intangibles = Utils.intangibles(values);
+        expect(intangibles).toBe(18.48);
+    })
+
+    it('should return the inventory', () => {
+        const values = [20.93, 16.57, 19.96, 21.81, 21.34, 22.71, 20.34, 23.33, 24.80, 25.42, 25.42];
+        const inventory = Utils.inventory(values);
+        expect(inventory).toBe(25.42);
+    })
+
+    it('should return the RoE', () => {
+        const values = [20.03, 6.85, 13.52, 13.50, 9.90, 14.58, 8.82, 11.23, 16.76, 16.98, 16.98];
+        const roe = Utils.returnOnEquity(values);
+        expect(roe).toBe(16.98);
+    })
+
+    it('should return the RoA', () => {
+        const values = [7.19, 2.66, 5.82, 6.10, 4.57, 6.77, 4.08, 4.92, 7.13, 7.39, 7.39];
+        const roa = Utils.returnOnAssets(values);
+        expect(roa).toBe(7.39);
+    })
+
+    it('should return the ROCE', () => {
+        const values = [12.75, 6.05, 10.69, 11.40, 8.41, 12.03, 7.26, 8.84, 13.48, 14.58, 14.58];
+        const roce = Utils.returnOnCapitalEmployed(values);
+        expect(roce).toBe(14.58);
+    })
+
 });

@@ -1,5 +1,5 @@
 import { Value } from 'app/model/value';
-import { Constants } from 'app/utils/constants';
+import { ValueStatus, ValueType } from 'app/utils/enums';
 
 /**
  * Utils class
@@ -40,12 +40,14 @@ export class Utils {
      * @return equityRatio (dt. Eigenkapitalquote).
      */
     static equityRatio(totalStockholdersEquity: Array<number> | null): Value {
-        let val = null;
+        const val = new Value('Eigenkapitalquote', 'equity ratio');
+        val.type = ValueType.PERC;
 
         if (totalStockholdersEquity) {
-            val = Utils.lastItem(totalStockholdersEquity);
+            val.value = Utils.lastItem(totalStockholdersEquity);
+            val.status = Utils.getValueStatus(val, 20, 30);
         }
-        return new Value('Eigenkapitalquote', 'equity ratio', val, Constants.TYPE_PERC);
+        return val;
     }
 
     /**
@@ -54,15 +56,16 @@ export class Utils {
      * @return asset turnover (dt. Kapitalumschlag) of the last 12 months.
      */
     static assetTurnover(assetTurnover: Array<number> | null): Value {
-        let val = null;
+        const val = new Value('Kapitalumschlag', 'asset turnover');
 
         if (assetTurnover) {
             const trend = Utils.trend(Utils.sublist(assetTurnover, 7, true));
             if (trend) {
-                val = Utils.round(Utils.lastItem(trend));
+                val.value = Utils.round(Utils.lastItem(trend));
+                val.status = this.getValueStatus(val, Utils.firstItem(trend));
             }
         }
-        return new Value('Kapitalumschlag', 'asset turnover', val);
+        return val;
     }
 
     /**
@@ -71,16 +74,18 @@ export class Utils {
      * @return equity growth (dt. Wachstum Eigenkapital).
      */
     static equityGrowth(bookPerShare: Array<number> | null): Value {
-        let val = null;
+        const val = new Value('Wachstum Eigenkapital', 'equity growth');
+        val.type = ValueType.PERC;
 
         if (bookPerShare) {
             const trend = Utils.trend(Utils.sublist(bookPerShare, 7, true));
             if (trend) {
                 const growth = Utils.lastItem(trend) / trend[0] - 1;
-                val = Utils.round(growth * 100);
+                val.value = Utils.round(growth * 100);
+                val.status = this.getValueStatus(val, 0, 20);
             }
         }
-        return new Value('Wachstum Eigenkapital', 'equity growth', val, Constants.TYPE_PERC);
+        return val;
     }
 
     /**
@@ -89,12 +94,13 @@ export class Utils {
      * @return current ratio (dt. Liquiditätsgrad).
      */
     static currentRatio(currentRatio: Array<number> | null): Value {
-        let val = null;
+        const val = new Value('Liquiditätsgrad', 'current ratio');
 
         if (currentRatio) {
-            val = Utils.round(Utils.lastItem(currentRatio));
+            val.value = Utils.round(Utils.lastItem(currentRatio));
+            val.status = this.getValueStatus(val, 1, 2);
         }
-        return new Value('Liquiditätsgrad', 'current ratio', val);
+        return val;
     }
 
     /**
@@ -103,12 +109,13 @@ export class Utils {
      * @return debt equity (dt. Verschuldungsgrad).
      */
     static debtEquity(debtEquity: Array<number> | null): Value {
-        let val = null;
+        const val = new Value('Verschuldungsgrad', 'debt / equity');
 
         if (debtEquity) {
-            val = Utils.round(Utils.lastItem(debtEquity));
+            val.value = Utils.round(Utils.lastItem(debtEquity));
+            val.status = this.getValueStatus(val, 0.5, 1, true);
         }
-        return new Value('Verschuldungsgrad', 'debt / equity', val);
+        return val;
     }
 
     /**
@@ -117,12 +124,14 @@ export class Utils {
      * @return intangibles (dt. Anteil immaterieller Vermögenswerte).
      */
     static intangibles(intangibles: Array<number> | null): Value {
-        let val = null;
+        const val = new Value('Goodwill / Assets', 'intangibles');
+        val.type = ValueType.PERC;
 
         if (intangibles) {
-            val = Utils.round(Utils.lastItem(intangibles));
+            val.value = Utils.round(Utils.lastItem(intangibles));
+            val.status = this.getValueStatus(val, 20, null, true);
         }
-        return new Value('Goodwill / Assets', 'intangibles', val, Constants.TYPE_PERC);
+        return val;
     }
 
     /**
@@ -131,12 +140,14 @@ export class Utils {
      * @return inventory (dt. Inventar).
      */
     static inventory(inventory: Array<number> | null): Value {
-        let val = null;
+        const val = new Value('Inventar', 'inventory');
+        val.type = ValueType.PERC;
 
         if (inventory) {
-            val = Utils.round(Utils.lastItem(inventory));
+            val.value = Utils.round(Utils.lastItem(inventory));
+            val.status = this.getValueStatus(val, Utils.firstItem(inventory), null, true);
         }
-        return new Value('Inventar', 'inventory', val, Constants.TYPE_PERC);
+        return val;
     }
 
     /**
@@ -145,12 +156,14 @@ export class Utils {
      * @return return on equity (dt. Eigenkapitalrendite).
      */
     static returnOnEquity(returnOnEquity: Array<number> | null): Value {
-        let val = null;
+        const val = new Value('Eigenkapitalrendite', 'return on equity (RoE)');
+        val.type = ValueType.PERC;
 
         if (returnOnEquity) {
-            val = Utils.round(Utils.lastItem(returnOnEquity));
+            val.value = Utils.round(Utils.lastItem(returnOnEquity));
+            val.status = this.getValueStatus(val, 10, 15);
         }
-        return new Value('Eigenkapitalrendite', 'return on equity (RoE)', val, Constants.TYPE_PERC);
+        return val;
     }
 
     /**
@@ -159,12 +172,14 @@ export class Utils {
      * @return return on assets (dt. Gesamtkapitalrendite).
      */
     static returnOnAssets(returnOnAssets: Array<number> | null): Value {
-        let val = null;
+        const val = new Value('Gesamtkapitalrendite', 'return on assets (RoA)');
+        val.type = ValueType.PERC;
 
         if (returnOnAssets) {
-            val = Utils.round(Utils.lastItem(returnOnAssets));
+            val.value = Utils.round(Utils.lastItem(returnOnAssets));
+            val.status = this.getValueStatus(val, 5, 10);
         }
-        return new Value('Gesamtkapitalrendite', 'return on assets (RoA)', val, Constants.TYPE_PERC);
+        return val;
     }
 
     /**
@@ -173,12 +188,14 @@ export class Utils {
      * @return return on capital employed (dt. Kapitalrendite).
      */
     static returnOnCapitalEmployed(returnOnInvestedCapital: Array<number> | null): Value {
-        let val = null;
+        const val = new Value('Kapitalrendite', 'return on capital employed (ROCE)');
+        val.type = ValueType.PERC;
 
         if (returnOnInvestedCapital) {
-            val = Utils.round(Utils.lastItem(returnOnInvestedCapital));
+            val.value = Utils.round(Utils.lastItem(returnOnInvestedCapital));
+            val.status = this.getValueStatus(val, 10, 15);
         }
-        return new Value('Kapitalrendite', 'return on capital employed (ROCE)', val, Constants.TYPE_PERC);
+        return val;
     }
 
     /**
@@ -266,11 +283,55 @@ export class Utils {
     }
 
     /**
+     * Returns the first item of the given list.
+     * @param values The list
+     * @return first item of the given list.
+     */
+    static firstItem<T>(values: Array<T>): T {
+        return values[0];
+    }
+
+    /**
      * Returns the last item of the given list.
      * @param values The list
      * @return last item of the given list.
      */
     static lastItem<T>(values: Array<T>): T {
         return values[values.length - 1];
+    }
+
+    /**
+     * Return value status.
+     * @param val The value.
+     * @param min The min value of neutral status.
+     * @param max The max value of neutral status.
+     */
+    static getValueStatus(val: Value, min: number, max?: number | null, revert?: boolean): ValueStatus {
+        let status = ValueStatus.NEUTRAL;
+
+        if (val.value) {
+            if (max) {
+                if (val.value > max) {
+                    status = ValueStatus.GOOD;
+                } else if (val.value < min) {
+                    status = ValueStatus.BAD;
+                }
+            } else {
+                if (val.value > min) {
+                    status = ValueStatus.GOOD;
+                } else {
+                    status = ValueStatus.BAD;
+                }
+            }
+        }
+
+        if (revert) {
+            if (status === ValueStatus.GOOD) {
+                status = ValueStatus.BAD;
+            } else if (status === ValueStatus.BAD) {
+                status = ValueStatus.GOOD;
+            }
+        }
+        return status;
     }
 }

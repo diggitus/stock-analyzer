@@ -9,7 +9,7 @@ import { ValuationHistory } from 'app/model/valuationHistory';
 import { Value } from 'app/model/value';
 import { FinancialsActions } from 'app/services/financials/financials.actions';
 import { ValuationActions } from 'app/services/valuation/valuation.actions';
-import { Constants } from 'app/utils/constants';
+import { ValueStatus } from 'app/utils/enums';
 import { Utils } from 'app/utils/utils';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
@@ -39,17 +39,13 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
     finance: any;
     keyStat: any;
 
-    typePerc: number;
-
     /**
      * Constructor.
      */
     constructor(
         private valuationActions: ValuationActions,
         private financialsActions: FinancialsActions,
-    ) {
-        this.typePerc = Constants.TYPE_PERC;
-    }
+    ) { }
 
     /**
      * OnInit handler.
@@ -65,6 +61,21 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
             this.finance = this.getFinanceValues(state.finance);
             this.keyStat = this.getKeyStatValues(state.keyStat);
         });
+    }
+
+    /**
+     * Returns the classname for the status color.
+     * @param val The value.
+     * @return status color.
+     */
+    getStatusColor(val: Value): string {
+        if (val.status === ValueStatus.GOOD) {
+            return 'text-white bg-success';
+        } else if (val.status === ValueStatus.BAD) {
+            return 'text-white bg-danger';
+        } else {
+            return '';
+        }
     }
 
     /**

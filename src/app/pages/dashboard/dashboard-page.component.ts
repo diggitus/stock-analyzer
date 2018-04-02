@@ -19,8 +19,7 @@ const LAST_YEARS = 6;
  */
 @Component({
     selector: 'app-dashboard-page',
-    templateUrl: 'dashboard-page.component.html',
-    styleUrls: ['dashboard.component.scss']
+    templateUrl: 'dashboard-page.component.html'
 })
 export class DashboardPageComponent implements OnInit, OnDestroy {
 

@@ -21,10 +21,7 @@
             <ul class="list-group list-group-flush">
                 <ng-container *ngFor="let valuationValue of valuation">
                     <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <div class="list-item">
-                            <div>{{ valuationValue.de }}</div>
-                            <div class="text-muted">{{ valuationValue.en }}</div>
-                        </div>
+                        <app-headline [deu]="valuationValue.de" [eng]="valuationValue.en"></app-headline>
                         <span>{{ valuationValue.value }}</span>
                     </li>
                 </ng-container>
@@ -39,10 +36,7 @@
             <ul class="list-group list-group-flush">
                 <ng-container *ngFor="let valuationValue of valuation5y">
                     <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <div class="list-item">
-                            <div>{{ valuationValue.de }}</div>
-                            <div class="text-muted">{{ valuationValue.en }}</div>
-                        </div>
+                        <app-headline [deu]="valuationValue.de" [eng]="valuationValue.en"></app-headline>
                         <span>{{ valuationValue.value }}</span>
                     </li>
                 </ng-container>
@@ -57,7 +51,7 @@
             <div class="col-12 col-md-6 col-lg-3">
                 <div class="card">
                     <div class="card-header">
-                        {{ valuationHistoryValue.de }}
+                        <app-headline [deu]="valuationHistoryValue.de" [eng]="valuationHistoryValue.en"></app-headline>
                     </div>
                     <div class="card-body">
                         <p>{{ valuationHistoryValue.value }}</p>
@@ -73,7 +67,7 @@
         <ng-container *ngFor="let financeValue of finance">
             <div class="card">
                 <div class="card-header">
-                    {{ financeValue.de }}
+                    <app-headline [deu]="financeValue.de" [eng]="financeValue.en"></app-headline>
                 </div>
                 <div class="card-body">
                     {{ financeValue.value }}
@@ -84,7 +78,7 @@
         <ng-container *ngFor="let keyStatValue of keyStat">
             <div class="card">
                 <div class="card-header">
-                    {{ keyStatValue.de }}
+                    <app-headline [deu]="keyStatValue.de" [eng]="keyStatValue.en"></app-headline>
                 </div>
                 <div class="card-body">
                     {{ keyStatValue.value }}

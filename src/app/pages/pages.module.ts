@@ -1,10 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { DashboardPageComponent } from 'app/pages/dashboard/dashboard-page.component';
+import { SharedModule } from 'app/shared/shared.module';
 
 @NgModule({
     imports: [
-        CommonModule
+        CommonModule,
+        SharedModule
     ],
     declarations: [
         DashboardPageComponent

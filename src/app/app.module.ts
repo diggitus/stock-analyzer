@@ -9,6 +9,7 @@ import { FinancialsActions } from 'app/services/financials/financials.actions';
 import { FinancialsService } from 'app/services/financials/financials.service';
 import { StockService } from 'app/services/stock.service';
 import { ValuationActions } from 'app/services/valuation/valuation.actions';
+import { SharedModule } from 'app/shared/shared.module';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -22,6 +23,7 @@ import { ValuationService } from './services/valuation/valuation.service';
         AppRoutingModule,
         NgReduxModule,
         CoreModule,
+        SharedModule,
         PagesModule
     ],
     providers: [

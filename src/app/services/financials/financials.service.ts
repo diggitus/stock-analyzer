@@ -11,6 +11,7 @@ import { Finance } from 'app/model/finance';
 import { FinancialsApiResponse } from 'app/model/financialsApiResponse';
 import { KeyStat } from 'app/model/keyStat';
 import { LiquidityHealth } from 'app/model/liquidityHealth';
+import { Profitability } from 'app/model/profitability';
 import { SearchRequest } from 'app/model/searchRequest';
 import { BaseService } from 'app/services/base.service';
 import { Observable } from 'rxjs/Observable';
@@ -24,6 +25,7 @@ import { Observable } from 'rxjs/Observable';
 @Injectable()
 export class FinancialsService extends BaseService {
 
+    private readonly PROFITABILITY = 0;
     private readonly CASH_FLOW_RATIOS = 2;
     private readonly BALANCE_SHEET_ITEMS = 3;
     private readonly LIQUIDITY_HEALTH = 3;
@@ -106,6 +108,7 @@ export class FinancialsService extends BaseService {
                 const compData = (<FinancialsApiResponse>resp).componentData;
                 const keyStat = new KeyStat();
 
+                keyStat.profitability = this.parseProfitability(compData, this.PROFITABILITY);
                 keyStat.balanceSheetItems = this.parseBalanceSheetItems(compData, this.BALANCE_SHEET_ITEMS);
                 keyStat.cashFlowRatios = this.parseCashFlowRatios(compData, this.CASH_FLOW_RATIOS);
                 keyStat.efficiency = this.parseEfficiency(compData, this.EFFICIENCY);
@@ -206,6 +209,27 @@ export class FinancialsService extends BaseService {
         liquidityHealth.debtEquity = this.parseSingleItem(tableRows, 'Debt/Equity');
 
         return liquidityHealth;
+    }
+
+    /**
+     * Parses the profitability part of the key stat part.
+     * @param compData Content of the component data attribute of the response.
+     * @param tab The index of the tab content element.
+     */
+    private parseProfitability(compData: string, tab: number): Profitability {
+        const profitability = new Profitability();
+        const tableRows = this.getTableRows(compData, tab, 1);
+
+        profitability.taxRate = this.parseSingleItem(tableRows, 'Tax Rate');
+        profitability.netMargin = this.parseSingleItem(tableRows, 'Net Margin');
+        profitability.assetTurnover = this.parseSingleItem(tableRows, 'Asset Turnover');
+        profitability.returnOnAssets = this.parseSingleItem(tableRows, 'Return on Assets');
+        profitability.financialLeverage = this.parseSingleItem(tableRows, 'Financial Leverage');
+        profitability.returnOnEquity = this.parseSingleItem(tableRows, 'Return on Equity');
+        profitability.returnOnInvestedCapital = this.parseSingleItem(tableRows, 'Return on Invested Capital');
+        profitability.interestCoverage = this.parseSingleItem(tableRows, 'Interest Coverage');
+
+        return profitability;
     }
 
     /**

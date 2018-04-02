@@ -216,6 +216,21 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
                 de: 'Inventar',
                 en: 'inventory',
                 value: keyStat.balanceSheetItems ? Utils.inventory(keyStat.balanceSheetItems.inventory) : null
+            },
+            {
+                de: 'Eigenkapitalrendite',
+                en: 'return on equity (RoE)',
+                value: keyStat.profitability ? Utils.returnOnEquity(keyStat.profitability.returnOnEquity) : null
+            },
+            {
+                de: 'Gesamtkapitalrendite',
+                en: 'return on assets (RoA)',
+                value: keyStat.profitability ? Utils.returnOnAssets(keyStat.profitability.returnOnAssets) : null
+            },
+            {
+                de: 'Kapitalrendite',
+                en: 'return on capital employed (ROCE)',
+                value: keyStat.profitability ? Utils.returnOnCapitalEmployed(keyStat.profitability.returnOnInvestedCapital) : null
             }
         ];
     }

@@ -13,47 +13,29 @@
             </div>
         </div>
 
-        <!-- valuation -->
-        <div class="card">
-            <div class="card-header">
-                Aktuelle Werte
-            </div>
-            <ul class="list-group list-group-flush">
-                <ng-container *ngFor="let valuationValue of valuation">
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <app-headline [deu]="valuationValue.de" [eng]="valuationValue.en"></app-headline>
-                        <span>{{ valuationValue.value }}</span>
-                    </li>
-                </ng-container>
-            </ul>
-        </div>
-
-        <!-- valuation 5-years -->
-        <div class="card">
-            <div class="card-header">
-                Aktuelle Werte (5-Jahre)
-            </div>
-            <ul class="list-group list-group-flush">
-                <ng-container *ngFor="let valuationValue of valuation5y">
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <app-headline [deu]="valuationValue.de" [eng]="valuationValue.en"></app-headline>
-                        <span>{{ valuationValue.value }}</span>
-                    </li>
-                </ng-container>
-            </ul>
-        </div>
-
-
-
-        <!-- valuation history 6-years -->
-        <ng-container *ngFor="let valuationHistoryValue of valuationHistory">
+        <!-- values -->
+        <ng-container *ngFor="let value of ratings">
             <div class="card">
                 <div class="card-header">
-                    <app-headline [deu]="valuationHistoryValue.de" [eng]="valuationHistoryValue.en"></app-headline>
+                    <app-headline [deu]="value.deu" [eng]="value.eng"></app-headline>
                 </div>
-                <div class="card-body">
-                    <p>{{ valuationHistoryValue.value }}</p>
-                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span>Aktueller Wert</span>
+                        <span>{{ value.value }}</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span>Durchschnittswert</span>
+                        <span>{{ value.avgValue }}</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span>Bewertung</span>
+                        <span>{{ value.ratingValue }}</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span>{{ value.ratingLabel }}</span>
+                    </li>
+                </ul>
             </div>
         </ng-container>
 

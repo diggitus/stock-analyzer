@@ -4,8 +4,8 @@ import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
 import { FinancialsState, HeaderState, ValuationState } from 'app/app.state';
 import { Finance } from 'app/model/finance';
 import { KeyStat } from 'app/model/keyStat';
+import { Rating } from 'app/model/rating';
 import { Valuation } from 'app/model/valuation';
-import { ValuationHistory } from 'app/model/valuationHistory';
 import { Value } from 'app/model/value';
 import { FinancialsActions } from 'app/services/financials/financials.actions';
 import { ValuationActions } from 'app/services/valuation/valuation.actions';
@@ -32,12 +32,9 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
     private valuationStateSubscription: Subscription;
     private financialsStateSubscription: Subscription;
 
-    valuation: any;
-    valuation5y: any;
-    valuationHistory: any;
-
-    finance: any;
-    keyStat: any;
+    ratings: Array<Rating>;
+    finance: Array<Value>;
+    keyStat: Array<Value>;
 
     /**
      * Constructor.
@@ -52,9 +49,7 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
      */
     ngOnInit() {
         this.valuationStateSubscription = this.valuationState.subscribe(state => {
-            this.valuation = this.getValuationValues(state.valuation);
-            this.valuation5y = this.getValuation5yValues(state.valuation);
-            this.valuationHistory = this.getValuationHistoryValues(state.valuationHistory);
+            this.ratings = this.getRatings(state.valuation);
         });
 
         this.financialsStateSubscription = this.financialsState.subscribe(state => {
@@ -92,93 +87,37 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
     }
 
     /**
-     * Returns an object with current values of the stock.
+     * Returns ratings list.
      * @param valuation The valuation data.
-     * @return object with valuation values.
+     * @return ratings list.
      */
-    private getValuationValues(valuation: Valuation): any {
-        return [
-            {
-                de: 'KGV',
-                en: 'price / earnings',
-                value: valuation.priceEarnings
-            },
-            {
-                de: 'KBV',
-                en: 'price / book',
-                value: valuation.priceBook
-            },
-            {
-                de: 'KUV',
-                en: 'price / sales',
-                value: valuation.priceSales
-            },
-            {
-                de: 'Dividendenrendite',
-                en: 'dividend yield',
-                value: valuation.dividendYield + ' %'
-            }
-        ];
-    }
+    private getRatings(valuation: Valuation): Array<Rating> {
+        const resultList = new Array<Rating>();
 
-    /**
-     * Returns an object with valuation data of last 5-years.
-     * @param valuation The valuation data.
-     * @return object with valuation values.
-     */
-    private getValuation5yValues(valuation: Valuation): any {
-        return [
-            {
-                de: 'KGV',
-                en: 'price / earnings',
-                value: valuation.priceEarnings5yAvg
-            },
-            {
-                de: 'KBV',
-                en: 'price / book',
-                value: valuation.priceBook5yAvg
-            },
-            {
-                de: 'KUV',
-                en: 'price / sales',
-                value: valuation.priceSales5yAvg
-            },
-            {
-                de: 'Dividendenrendite',
-                en: 'dividend yield',
-                value: valuation.dividendYield5yAvg + ' %'
-            }
-        ];
-    }
+        // KGV
+        const priceEarnings = Utils.getValueRating(valuation.priceEarnings, valuation.priceEarnings5yAvg, 'KGV', 'price / earnings');
+        if (priceEarnings) {
+            resultList.push(priceEarnings);
+        }
 
-    /**
-     * Returns an object with valuation history values.
-     * @param valuationHistory The valuation history values.
-     * @return valuation history object for view.
-     */
-    private getValuationHistoryValues(valuationHistory: ValuationHistory): any {
-        return [
-            {
-                de: 'KGV (6-Jahre)',
-                en: 'price / earnings',
-                value: Utils.calcAvg(Utils.sublist(valuationHistory.priceEarnings, LAST_YEARS))
-            },
-            {
-                de: 'KBV (6-Jahre)',
-                en: 'price / book',
-                value: Utils.calcAvg(Utils.sublist(valuationHistory.priceBook, LAST_YEARS))
-            },
-            {
-                de: 'KUV (6-Jahre)',
-                en: 'price / sales',
-                value: Utils.calcAvg(Utils.sublist(valuationHistory.priceSales, LAST_YEARS))
-            },
-            {
-                de: 'Cash Flow (6-Jahre)',
-                en: 'price / cash flow',
-                value: Utils.calcAvg(Utils.sublist(valuationHistory.priceCashFlow, LAST_YEARS))
-            }
-        ];
+        // KBV
+        const priceBook = Utils.getValueRating(valuation.priceBook, valuation.priceBook5yAvg, 'KBV', 'price / book');
+        if (priceBook) {
+            resultList.push(priceBook);
+        }
+
+        // KUV
+        const priceSales = Utils.getValueRating(valuation.priceSales, valuation.priceBook5yAvg, 'KUV', 'price / sales');
+        if (priceSales) {
+            resultList.push(priceSales);
+        }
+
+        // Dividend Yield
+        const dividendYield = Utils.getDividendRating(valuation.dividendYield, valuation.dividendYield5yAvg, 'Dividendenrendite', 'dividend yield');
+        if (dividendYield) {
+            resultList.push(dividendYield);
+        }
+        return resultList;
     }
 
     /**

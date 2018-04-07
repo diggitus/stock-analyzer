@@ -14,3 +14,11 @@ export enum ValueType {
     PERC,
     RATIO
 }
+
+/**
+ * The value rating.
+ */
+export enum ValueRating {
+    OVERRATED,
+    UNDERRATED
+}

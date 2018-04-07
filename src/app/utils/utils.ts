@@ -1,5 +1,6 @@
+import { Rating } from 'app/model/rating';
 import { Value } from 'app/model/value';
-import { ValueStatus, ValueType } from 'app/utils/enums';
+import { ValueRating, ValueStatus, ValueType } from 'app/utils/enums';
 
 /**
  * Utils class
@@ -197,6 +198,87 @@ export class Utils {
         }
         return val;
     }
+
+    /**
+     * Returns a rating for the given value.
+     * @param value The current value.
+     * @param avgValue The average value.
+     * @return value rating or null.
+     */
+    static getValueRating(value: number | null, avgValue: number | null, deu: string, eng: string): Rating | null {
+        const result = new Rating(deu, eng);
+        result.value = value;
+        result.avgValue = avgValue;
+
+        if (!value || !avgValue) {
+            return null;
+        }
+
+        if (value - avgValue < 0) {
+            result.ratingValue = 1 - value / avgValue;
+        } else {
+            result.ratingValue = value / avgValue - 1
+        }
+        result.ratingValue = Utils.round(result.ratingValue * 100);
+
+        if (value - avgValue < 0) {
+            result.rating = ValueRating.UNDERRATED;
+        } else {
+            result.rating = ValueRating.OVERRATED;
+        }
+        result.ratingLabel = Utils.getRatingLabel(result.rating);
+
+        return result;
+    }
+
+    /**
+     * Returns a rating for the given dividend value.
+     * @param value The current value.
+     * @param avgValue The average value.
+     * @return dividend rating or null.
+     */
+    static getDividendRating(value: number | null, avgValue: number | null, deu: string, eng: string): Rating | null {
+        const result = new Rating(deu, eng);
+        result.value = value;
+        result.avgValue = avgValue;
+
+        if (!value || !avgValue) {
+            return result;
+        }
+
+        if (value > avgValue) {
+            result.ratingValue = 1 - avgValue / value;
+        } else {
+            result.ratingValue = avgValue / value - 1;
+        }
+        result.ratingValue = Utils.round(result.ratingValue * 100);
+
+        if (value - avgValue < 0) {
+            result.rating = ValueRating.OVERRATED;
+        } else {
+            result.rating = ValueRating.UNDERRATED;
+        }
+        result.ratingLabel = Utils.getRatingLabel(result.rating);
+
+        return result;
+    }
+
+    /**
+     * Return rating label. 
+     * @param value The value rating.
+     * @return rating label or null.
+     */
+    static getRatingLabel(valueRating: ValueRating | null): string | null {
+        if (valueRating !== null) {
+            switch (valueRating) {
+                case ValueRating.UNDERRATED: return 'Unterbewertet';
+                case ValueRating.OVERRATED: return 'Überbewertet';
+                default: null;
+            }
+        }
+        return null;
+    }
+
 
     /**
      * Calculates linear least squares.

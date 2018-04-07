@@ -1,3 +1,4 @@
+import { ValueRating } from 'app/utils/enums';
 import { Utils } from 'app/utils/utils';
 
 // tslint:disable:no-non-null-assertion
@@ -75,6 +76,26 @@ describe('Utils', () => {
         const values = [12.75, 6.05, 10.69, 11.40, 8.41, 12.03, 7.26, 8.84, 13.48, 14.58, 14.58];
         const roce = Utils.returnOnCapitalEmployed(values);
         expect(roce.value).toBe(14.58);
+    });
+
+    it('should return price earnings rating', () => {
+        const rating = Utils.getValueRating(6.6, 9.15, 'KGV', 'price / earnings');
+        expect(rating).not.toBeNull();
+
+        if (rating) {
+            expect(rating.ratingValue).toBe(27.87);
+            expect(rating.rating).toBe(ValueRating.UNDERRATED);
+        }
+    });
+
+    it('should return dividend yield rating', () => {
+        const rating = Utils.getDividendRating(5.6, 3.8, 'Dividendenrendite', 'dividend yield');
+        expect(rating).not.toBeNull();
+
+        if (rating) {
+            expect(rating.ratingValue).toBe(32.14);
+            expect(rating.rating).toBe(ValueRating.UNDERRATED);
+        }
     });
 
 });

@@ -7,14 +7,14 @@
                 Aktie
             </div>
             <div class="card-body">
-                <h5 class="card-title">{{headerState.searchRequest.symbol | uppercase}}</h5>
-                <h6 class="card-subtitle mb-2 text-muted">{{headerState.searchRequest.stockExchange}} | {{headerState.searchRequest.region}}
-                    | {{headerState.searchRequest.culture}}</h6>
+                <h5 class="card-title">{{ headerState.searchRequest.symbol | uppercase }}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">{{ headerState.searchRequest.stockExchange }} | {{ headerState.searchRequest.region
+                    }} | {{ headerState.searchRequest.culture }}</h6>
             </div>
         </div>
 
         <!-- values -->
-        <ng-container *ngFor="let value of ratings">
+        <ng-container *ngFor="let value of valuation">
             <div class="card">
                 <div class="card-header">
                     <app-headline [deu]="value.deu" [eng]="value.eng"></app-headline>
@@ -22,15 +22,24 @@
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         <span>Aktueller Wert</span>
-                        <span>{{ value.value }}</span>
+                        <div>
+                            <span>{{ value.value }}</span>
+                            <span *ngIf="value.type === 0">%</span>
+                        </div>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <span>Durchschnittswert</span>
-                        <span>{{ value.avgValue }}</span>
+                        <span>Durchschnittswert (5-Jahre)</span>
+                        <div>
+                            <span>{{ value.avgValue }}</span>
+                            <span *ngIf="value.type === 0">%</span>
+                        </div>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         <span>Bewertung</span>
-                        <span>{{ value.ratingValue }}</span>
+                        <div>
+                            <span>{{ value.ratingValue }}</span>
+                            <span>%</span>
+                        </div>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         <span>{{ value.ratingLabel }}</span>

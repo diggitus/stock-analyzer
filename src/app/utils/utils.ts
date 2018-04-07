@@ -217,7 +217,7 @@ export class Utils {
         if (value - avgValue < 0) {
             result.ratingValue = 1 - value / avgValue;
         } else {
-            result.ratingValue = value / avgValue - 1
+            result.ratingValue = value / avgValue - 1;
         }
         result.ratingValue = Utils.round(result.ratingValue * 100);
 
@@ -241,6 +241,7 @@ export class Utils {
         const result = new Rating(deu, eng);
         result.value = value;
         result.avgValue = avgValue;
+        result.type = ValueType.PERC;
 
         if (!value || !avgValue) {
             return result;
@@ -264,7 +265,7 @@ export class Utils {
     }
 
     /**
-     * Return rating label. 
+     * Return rating label.
      * @param value The value rating.
      * @return rating label or null.
      */
@@ -273,7 +274,6 @@ export class Utils {
             switch (valueRating) {
                 case ValueRating.UNDERRATED: return 'Unterbewertet';
                 case ValueRating.OVERRATED: return 'Überbewertet';
-                default: null;
             }
         }
         return null;

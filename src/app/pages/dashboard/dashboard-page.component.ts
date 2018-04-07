@@ -32,7 +32,7 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
     private valuationStateSubscription: Subscription;
     private financialsStateSubscription: Subscription;
 
-    ratings: Array<Rating>;
+    valuation: Array<Rating>;
     finance: Array<Value>;
     keyStat: Array<Value>;
 
@@ -49,7 +49,7 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
      */
     ngOnInit() {
         this.valuationStateSubscription = this.valuationState.subscribe(state => {
-            this.ratings = this.getRatings(state.valuation);
+            this.valuation = this.getValuationValues(state.valuation);
         });
 
         this.financialsStateSubscription = this.financialsState.subscribe(state => {
@@ -91,7 +91,7 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
      * @param valuation The valuation data.
      * @return ratings list.
      */
-    private getRatings(valuation: Valuation): Array<Rating> {
+    private getValuationValues(valuation: Valuation): Array<Rating> {
         const resultList = new Array<Rating>();
 
         // KGV

@@ -46,6 +46,7 @@ export class Utils {
 
         if (totalStockholdersEquity) {
             val.value = Utils.lastItem(totalStockholdersEquity);
+            val.borders = new Array<number>(20, 30);
             val.status = Utils.getValueStatus(val, 20, 30);
         }
         return val;
@@ -83,6 +84,7 @@ export class Utils {
             if (trend) {
                 const growth = Utils.lastItem(trend) / trend[0] - 1;
                 val.value = Utils.round(growth * 100);
+                val.borders = new Array<number>(0, 20);
                 val.status = this.getValueStatus(val, 0, 20);
             }
         }
@@ -130,6 +132,7 @@ export class Utils {
 
         if (intangibles) {
             val.value = Utils.round(Utils.lastItem(intangibles));
+            val.borders = [20];
             val.status = this.getValueStatus(val, 20, null, true);
         }
         return val;
@@ -146,6 +149,7 @@ export class Utils {
 
         if (inventory) {
             val.value = Utils.round(Utils.lastItem(inventory));
+            val.borders = [Utils.firstItem(inventory)];
             val.status = this.getValueStatus(val, Utils.firstItem(inventory), null, true);
         }
         return val;
@@ -162,6 +166,7 @@ export class Utils {
 
         if (returnOnEquity) {
             val.value = Utils.round(Utils.lastItem(returnOnEquity));
+            val.borders = new Array<number>(10, 15);
             val.status = this.getValueStatus(val, 10, 15);
         }
         return val;
@@ -178,6 +183,7 @@ export class Utils {
 
         if (returnOnAssets) {
             val.value = Utils.round(Utils.lastItem(returnOnAssets));
+            val.borders = new Array<number>(5, 10);
             val.status = this.getValueStatus(val, 5, 10);
         }
         return val;
@@ -194,6 +200,7 @@ export class Utils {
 
         if (returnOnInvestedCapital) {
             val.value = Utils.round(Utils.lastItem(returnOnInvestedCapital));
+            val.borders = new Array<number>(10, 15);
             val.status = this.getValueStatus(val, 10, 15);
         }
         return val;

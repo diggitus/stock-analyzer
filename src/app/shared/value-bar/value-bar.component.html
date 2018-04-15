@@ -1,0 +1,8 @@
+<div class="value-bar">
+    <ng-container *ngFor="let border of borders">
+        <div class="value-border" [style.left.%]="border"></div>
+    </ng-container>
+
+    <div class="value" [style.width.%]="value"></div>
+    <div class="max-value" [style.width.%]="maxValue"></div>
+</div>

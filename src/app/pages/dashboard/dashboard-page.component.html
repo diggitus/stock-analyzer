@@ -78,8 +78,11 @@
                             <app-headline [deu]="financeValue.deu" [eng]="financeValue.eng"></app-headline>
                         </div>
                         <div class="card-body">
-                            {{ financeValue.value }}
-                            <span *ngIf="financeValue.type === 0">%</span>
+                            <div>
+                                {{ financeValue.value }}
+                                <span *ngIf="financeValue.type === 0">%</span>
+                            </div>
+                            <app-value-bar *ngIf="financeValue.type === 0" [value]="financeValue.value" [borders]="financeValue.borders"></app-value-bar>
                         </div>
                     </div>
                 </div>
@@ -92,8 +95,11 @@
                             <app-headline [deu]="keyStatValue.deu" [eng]="keyStatValue.eng"></app-headline>
                         </div>
                         <div class="card-body">
-                            {{ keyStatValue.value }}
-                            <span *ngIf="keyStatValue.type === 0">%</span>
+                            <div>
+                                {{ keyStatValue.value }}
+                                <span *ngIf="keyStatValue.type === 0">%</span>
+                            </div>
+                            <app-value-bar *ngIf="keyStatValue.type === 0" [value]="keyStatValue.value" [borders]="keyStatValue.borders"></app-value-bar>
                         </div>
                     </div>
                 </div>

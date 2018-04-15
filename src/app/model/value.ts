@@ -9,6 +9,7 @@ export class Value {
     deu: string;
     eng: string;
     value: number | null;
+    borders: Array<number> | null;
     type: ValueType;
     status: ValueStatus;
 
@@ -19,6 +20,7 @@ export class Value {
         this.deu = deu;
         this.eng = eng;
         this.value = null;
+        this.borders = null;
         this.type = ValueType.RATIO;
         this.status = ValueStatus.NEUTRAL;
     }

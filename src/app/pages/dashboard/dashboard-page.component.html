@@ -1,77 +1,104 @@
 <ng-container *ngIf="(headerState | async) as headerState">
-    <div class="card-columns" *ngIf="headerState.searchRequest.symbol">
 
-        <!-- stock info -->
-        <div class="card">
-            <div class="card-header">
-                Aktie
+    <div *ngIf="headerState.searchRequest.symbol">
+
+        <div class="row">
+            <div class="col-lg-6 pb-4">
+                <!-- stock info -->
+                <div class="card">
+                    <div class="card-header">
+                        Aktie
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ headerState.searchRequest.symbol | uppercase }}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">{{ headerState.searchRequest.stockExchange }} | {{ headerState.searchRequest.region
+                            }} | {{ headerState.searchRequest.culture }}</h6>
+                    </div>
+                </div>
             </div>
-            <div class="card-body">
-                <h5 class="card-title">{{ headerState.searchRequest.symbol | uppercase }}</h5>
-                <h6 class="card-subtitle mb-2 text-muted">{{ headerState.searchRequest.stockExchange }} | {{ headerState.searchRequest.region
-                    }} | {{ headerState.searchRequest.culture }}</h6>
+            <div class="col-lg-6 pb-4">
+                <!-- growth -->
+                <div class="card">
+                    <div class="card-header">
+                        Aktie
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ headerState.searchRequest.symbol | uppercase }}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">{{ headerState.searchRequest.stockExchange }} | {{ headerState.searchRequest.region
+                            }} | {{ headerState.searchRequest.culture }}</h6>
+                    </div>
+                </div>
+
             </div>
+
+
+            <!-- values -->
+            <ng-container *ngFor="let value of valuation">
+                <div class="col-md-6 col-lg-3 pb-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <app-headline [deu]="value.deu" [eng]="value.eng"></app-headline>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <span>Aktueller Wert</span>
+                                <div>
+                                    <span>{{ value.value }}</span>
+                                    <span *ngIf="value.type === 0">%</span>
+                                </div>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <span>Durchschnittswert (5-Jahre)</span>
+                                <div>
+                                    <span>{{ value.avgValue }}</span>
+                                    <span *ngIf="value.type === 0">%</span>
+                                </div>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <span>Bewertung</span>
+                                <div>
+                                    <span>{{ value.ratingValue }}</span>
+                                    <span>%</span>
+                                </div>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <span>{{ value.ratingLabel }}</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </ng-container>
+
+            <!-- financials -->
+            <ng-container *ngFor="let financeValue of finance">
+                <div class="col-md-6 col-lg-2 pb-4">
+                    <div class="card" [ngClass]="getStatusColor(financeValue)">
+                        <div class="card-header">
+                            <app-headline [deu]="financeValue.deu" [eng]="financeValue.eng"></app-headline>
+                        </div>
+                        <div class="card-body">
+                            {{ financeValue.value }}
+                            <span *ngIf="financeValue.type === 0">%</span>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+
+            <ng-container *ngFor="let keyStatValue of keyStat">
+                <div class="col-md-6 col-lg-2 pb-4">
+                    <div class="card" [ngClass]="getStatusColor(keyStatValue)">
+                        <div class="card-header">
+                            <app-headline [deu]="keyStatValue.deu" [eng]="keyStatValue.eng"></app-headline>
+                        </div>
+                        <div class="card-body">
+                            {{ keyStatValue.value }}
+                            <span *ngIf="keyStatValue.type === 0">%</span>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
         </div>
-
-        <!-- values -->
-        <ng-container *ngFor="let value of valuation">
-            <div class="card">
-                <div class="card-header">
-                    <app-headline [deu]="value.deu" [eng]="value.eng"></app-headline>
-                </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <span>Aktueller Wert</span>
-                        <div>
-                            <span>{{ value.value }}</span>
-                            <span *ngIf="value.type === 0">%</span>
-                        </div>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <span>Durchschnittswert (5-Jahre)</span>
-                        <div>
-                            <span>{{ value.avgValue }}</span>
-                            <span *ngIf="value.type === 0">%</span>
-                        </div>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <span>Bewertung</span>
-                        <div>
-                            <span>{{ value.ratingValue }}</span>
-                            <span>%</span>
-                        </div>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <span>{{ value.ratingLabel }}</span>
-                    </li>
-                </ul>
-            </div>
-        </ng-container>
-
-        <!-- financials -->
-        <ng-container *ngFor="let financeValue of finance">
-            <div class="card" [ngClass]="getStatusColor(financeValue)">
-                <div class="card-header">
-                    <app-headline [deu]="financeValue.deu" [eng]="financeValue.eng"></app-headline>
-                </div>
-                <div class="card-body">
-                    {{ financeValue.value }}
-                    <span *ngIf="financeValue.type === 0">%</span>
-                </div>
-            </div>
-        </ng-container>
-
-        <ng-container *ngFor="let keyStatValue of keyStat">
-            <div class="card" [ngClass]="getStatusColor(keyStatValue)">
-                <div class="card-header">
-                    <app-headline [deu]="keyStatValue.deu" [eng]="keyStatValue.eng"></app-headline>
-                </div>
-                <div class="card-body">
-                    {{ keyStatValue.value }}
-                    <span *ngIf="keyStatValue.type === 0">%</span>
-                </div>
-            </div>
-        </ng-container>
     </div>
 
 </ng-container>

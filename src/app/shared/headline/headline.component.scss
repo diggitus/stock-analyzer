@@ -1,5 +1,6 @@
 .headline {
     line-height: 1em;
+    word-break: break-all;
 
     & div:last-child {
         font-size: .8em;

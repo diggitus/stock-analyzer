@@ -1,8 +1,6 @@
 import { ValueStatus, ValueType } from 'app/utils/enums';
 
 /**
-import { ValueStatus, ValueType } from 'app/utils/enums';
-
  * This class is for the view. It represents a single value in the view.
  */
 export class Value {
@@ -12,6 +10,7 @@ export class Value {
     borders: Array<number> | null;
     type: ValueType;
     status: ValueStatus;
+    description: string | null;
 
     /**
      * Constructor.
@@ -23,5 +22,6 @@ export class Value {
         this.borders = null;
         this.type = ValueType.RATIO;
         this.status = ValueStatus.NEUTRAL;
+        this.description = null;
     }
 }

@@ -10,8 +10,11 @@
                         Aktie
                     </div>
                     <div class="card-body">
-                        <h5 class="card-title">{{ headerState.searchRequest.symbol | uppercase }}</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">{{ headerState.searchRequest.stockExchange }} | {{ headerState.searchRequest.region
+                        <h5 class="card-title">{{
+                            headerState.searchRequest.symbol | uppercase }}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">{{
+                            headerState.searchRequest.stockExchange }} | {{
+                            headerState.searchRequest.region
                             }} | {{ headerState.searchRequest.culture }}</h6>
                     </div>
                 </div>
@@ -23,14 +26,16 @@
                         Aktie
                     </div>
                     <div class="card-body">
-                        <h5 class="card-title">{{ headerState.searchRequest.symbol | uppercase }}</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">{{ headerState.searchRequest.stockExchange }} | {{ headerState.searchRequest.region
+                        <h5 class="card-title">{{
+                            headerState.searchRequest.symbol | uppercase }}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">{{
+                            headerState.searchRequest.stockExchange }} | {{
+                            headerState.searchRequest.region
                             }} | {{ headerState.searchRequest.culture }}</h6>
                     </div>
                 </div>
 
             </div>
-
 
             <!-- values -->
             <ng-container *ngFor="let value of valuation">
@@ -38,6 +43,8 @@
                     <div class="card">
                         <div class="card-header">
                             <app-headline [deu]="value.deu" [eng]="value.eng"></app-headline>
+                            <app-tooltip *ngIf="value.description"
+                                [description]="value.description"></app-tooltip>
                         </div>
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item d-flex justify-content-between align-items-center">
@@ -62,7 +69,8 @@
                                 </div>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center">
-                                <span [ngClass]="{ 'text-danger': value.rating === 0, 'text-success': value.rating === 1 }">{{ value.ratingLabel }}</span>
+                                <span [ngClass]="{ 'text-danger': value.rating === 0, 'text-success': value.rating === 1 }">{{
+                                    value.ratingLabel }}</span>
                             </li>
                         </ul>
                     </div>
@@ -76,13 +84,16 @@
                     <div class="card" [ngClass]="getStatusColor(financeValue)">
                         <div class="card-header">
                             <app-headline [deu]="financeValue.deu" [eng]="financeValue.eng"></app-headline>
+                            <app-tooltip *ngIf="financeValue.description"
+                                [description]="financeValue.description"></app-tooltip>
                         </div>
                         <div class="card-body">
                             <div>
                                 {{ financeValue.value }}
                                 <span *ngIf="financeValue.type === 0">%</span>
                             </div>
-                            <app-value-bar *ngIf="financeValue.type === 0" [value]="financeValue.value" [borders]="financeValue.borders"></app-value-bar>
+                            <app-value-bar *ngIf="financeValue.type === 0"
+                                [value]="financeValue.value" [borders]="financeValue.borders"></app-value-bar>
                         </div>
                     </div>
                 </div>
@@ -93,13 +104,16 @@
                     <div class="card" [ngClass]="getStatusColor(keyStatValue)">
                         <div class="card-header">
                             <app-headline [deu]="keyStatValue.deu" [eng]="keyStatValue.eng"></app-headline>
+                            <app-tooltip *ngIf="keyStatValue.description"
+                                [description]="keyStatValue.description"></app-tooltip>
                         </div>
                         <div class="card-body">
                             <div>
                                 {{ keyStatValue.value }}
                                 <span *ngIf="keyStatValue.type === 0">%</span>
                             </div>
-                            <app-value-bar *ngIf="keyStatValue.type === 0" [value]="keyStatValue.value" [borders]="keyStatValue.borders"></app-value-bar>
+                            <app-value-bar *ngIf="keyStatValue.type === 0"
+                                [value]="keyStatValue.value" [borders]="keyStatValue.borders"></app-value-bar>
                         </div>
                     </div>
                 </div>

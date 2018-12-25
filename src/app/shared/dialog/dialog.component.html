@@ -1,0 +1,11 @@
+<div #dialog class="app-dialog" [style.width.px]="width">
+
+    <header>
+        <i class="fa fa-close" (click)="onClose()"></i>
+    </header>
+
+    <main>
+        <ng-content></ng-content>
+    </main>
+
+</div>

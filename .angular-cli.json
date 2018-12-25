@@ -20,7 +20,8 @@
             "prefix": "app",
             "styles": [
                 "assets/scss/stock-analyzer.scss",
-                "../node_modules/bootstrap/dist/css/bootstrap.min.css"
+                "../node_modules/bootstrap/dist/css/bootstrap.min.css",
+                "../node_modules/font-awesome/css/font-awesome.min.css"
             ],
             "scripts": [
                 "../node_modules/jquery/dist/jquery.slim.min.js",
@@ -57,6 +58,9 @@
     },
     "defaults": {
         "styleExt": "scss",
-        "component": {}
+        "component": {},
+        "serve": {
+            "port": 4200
+        }
     }
 }

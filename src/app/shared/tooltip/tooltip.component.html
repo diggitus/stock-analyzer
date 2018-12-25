@@ -1,0 +1,7 @@
+<div class="value-tooltip">
+    <i class="fa fa-2x fa-info-circle" (click)="toggleTooltip()"></i>
+
+    <app-dialog *ngIf="visible" [(visible)]="visible">
+        {{ description }}
+    </app-dialog>
+</div>

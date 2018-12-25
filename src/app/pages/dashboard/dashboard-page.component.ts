@@ -9,6 +9,7 @@ import { Valuation } from 'app/model/valuation';
 import { Value } from 'app/model/value';
 import { FinancialsActions } from 'app/services/financials/financials.actions';
 import { ValuationActions } from 'app/services/valuation/valuation.actions';
+import { Descriptions } from 'app/shared/descriptions';
 import { ValueStatus } from 'app/utils/enums';
 import { Utils } from 'app/utils/utils';
 import { Observable } from 'rxjs/Observable';
@@ -21,7 +22,8 @@ const LAST_YEARS = 6;
  */
 @Component({
     selector: 'app-dashboard-page',
-    templateUrl: 'dashboard-page.component.html'
+    templateUrl: 'dashboard-page.component.html',
+    styleUrls: ['dashboard-page.component.scss']
 })
 export class DashboardPageComponent implements OnInit, OnDestroy {
 
@@ -95,25 +97,25 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
         const resultList = new Array<Rating>();
 
         // KGV
-        const priceEarnings = Utils.getValueRating(valuation.priceEarnings, valuation.priceEarnings5yAvg, 'KGV', 'price / earnings');
+        const priceEarnings = Utils.getValueRating(valuation.priceEarnings, valuation.priceEarnings5yAvg, 'KGV', 'price / earnings', Descriptions.KGV);
         if (priceEarnings) {
             resultList.push(priceEarnings);
         }
 
         // KBV
-        const priceBook = Utils.getValueRating(valuation.priceBook, valuation.priceBook5yAvg, 'KBV', 'price / book');
+        const priceBook = Utils.getValueRating(valuation.priceBook, valuation.priceBook5yAvg, 'KBV', 'price / book', Descriptions.KBV);
         if (priceBook) {
             resultList.push(priceBook);
         }
 
         // KUV
-        const priceSales = Utils.getValueRating(valuation.priceSales, valuation.priceBook5yAvg, 'KUV', 'price / sales');
+        const priceSales = Utils.getValueRating(valuation.priceSales, valuation.priceBook5yAvg, 'KUV', 'price / sales', Descriptions.KUV);
         if (priceSales) {
             resultList.push(priceSales);
         }
 
         // Dividend Yield
-        const dividendYield = Utils.getDividendRating(valuation.dividendYield, valuation.dividendYield5yAvg, 'Dividendenrendite', 'dividend yield');
+        const dividendYield = Utils.getDividendRating(valuation.dividendYield, valuation.dividendYield5yAvg, 'Dividendenrendite', 'dividend yield', Descriptions.dividendYield);
         if (dividendYield) {
             resultList.push(dividendYield);
         }

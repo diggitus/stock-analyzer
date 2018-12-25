@@ -1,0 +1,10 @@
+.value-tooltip {
+    margin-left: 4px;
+
+    i {
+        cursor: pointer;
+        &:hover {
+            color: #00aedf;
+        }
+    }
+}

@@ -1,5 +1,6 @@
 import { Rating } from 'app/model/rating';
 import { Value } from 'app/model/value';
+import { Descriptions } from 'app/shared/descriptions';
 import { ValueRating, ValueStatus, ValueType } from 'app/utils/enums';
 
 /**
@@ -43,6 +44,7 @@ export class Utils {
     static equityRatio(totalStockholdersEquity: Array<number> | null): Value {
         const val = new Value('Eigenkapitalquote', 'equity ratio');
         val.type = ValueType.PERC;
+        val.description = Descriptions.equityRatio;
 
         if (totalStockholdersEquity) {
             val.value = Utils.lastItem(totalStockholdersEquity);
@@ -59,6 +61,7 @@ export class Utils {
      */
     static assetTurnover(assetTurnover: Array<number> | null): Value {
         const val = new Value('Kapitalumschlag', 'asset turnover');
+        val.description = Descriptions.assetTurnover;
 
         if (assetTurnover) {
             const trend = Utils.trend(Utils.sublist(assetTurnover, 7, true));
@@ -78,6 +81,7 @@ export class Utils {
     static equityGrowth(bookPerShare: Array<number> | null): Value {
         const val = new Value('Wachstum Eigenkapital', 'equity growth');
         val.type = ValueType.PERC;
+        val.description = Descriptions.equityGrowth;
 
         if (bookPerShare) {
             const trend = Utils.trend(Utils.sublist(bookPerShare, 7, true));
@@ -98,6 +102,7 @@ export class Utils {
      */
     static currentRatio(currentRatio: Array<number> | null): Value {
         const val = new Value('Liquiditätsgrad', 'current ratio');
+        val.description = Descriptions.currentRatio;
 
         if (currentRatio) {
             val.value = Utils.round(Utils.lastItem(currentRatio));
@@ -113,6 +118,7 @@ export class Utils {
      */
     static debtEquity(debtEquity: Array<number> | null): Value {
         const val = new Value('Verschuldungsgrad', 'debt / equity');
+        val.description = Descriptions.debtEquity;
 
         if (debtEquity) {
             val.value = Utils.round(Utils.lastItem(debtEquity));
@@ -163,6 +169,7 @@ export class Utils {
     static returnOnEquity(returnOnEquity: Array<number> | null): Value {
         const val = new Value('Eigenkapitalrendite', 'return on equity (RoE)');
         val.type = ValueType.PERC;
+        val.description = Descriptions.returnOnEquity;
 
         if (returnOnEquity) {
             val.value = Utils.round(Utils.lastItem(returnOnEquity));
@@ -180,6 +187,7 @@ export class Utils {
     static returnOnAssets(returnOnAssets: Array<number> | null): Value {
         const val = new Value('Gesamtkapitalrendite', 'return on assets (RoA)');
         val.type = ValueType.PERC;
+        val.description = Descriptions.returnOnAssets;
 
         if (returnOnAssets) {
             val.value = Utils.round(Utils.lastItem(returnOnAssets));
@@ -197,6 +205,7 @@ export class Utils {
     static returnOnCapitalEmployed(returnOnInvestedCapital: Array<number> | null): Value {
         const val = new Value('Kapitalrendite', 'return on capital employed (ROCE)');
         val.type = ValueType.PERC;
+        val.description = Descriptions.returnOnCapitalEmployed;
 
         if (returnOnInvestedCapital) {
             val.value = Utils.round(Utils.lastItem(returnOnInvestedCapital));
@@ -210,10 +219,14 @@ export class Utils {
      * Returns a rating for the given value.
      * @param value The current value.
      * @param avgValue The average value.
+     * @param deu The german label.
+     * @param eng The english label.
+     * @param descr The value description.
      * @return value rating or null.
      */
-    static getValueRating(value: number | null, avgValue: number | null, deu: string, eng: string): Rating | null {
+    static getValueRating(value: number | null, avgValue: number | null, deu: string, eng: string, descr?: string): Rating | null {
         const result = new Rating(deu, eng);
+        result.description = descr == null ? null : descr;
         result.value = value;
         result.avgValue = avgValue;
 
@@ -242,10 +255,14 @@ export class Utils {
      * Returns a rating for the given dividend value.
      * @param value The current value.
      * @param avgValue The average value.
+     * @param deu The german label.
+     * @param eng The english label.
+     * @param descr The value description.
      * @return dividend rating or null.
      */
-    static getDividendRating(value: number | null, avgValue: number | null, deu: string, eng: string): Rating | null {
+    static getDividendRating(value: number | null, avgValue: number | null, deu: string, eng: string, descr?: string): Rating | null {
         const result = new Rating(deu, eng);
+        result.description = descr == null ? null : descr;
         result.value = value;
         result.avgValue = avgValue;
         result.type = ValueType.PERC;
@@ -290,7 +307,7 @@ export class Utils {
     /**
      * Calculates linear least squares.
      * @param valueList List with value items.
-     * @return list with line value.
+     * @return list with line value or null.
      */
     static trend(valueList: Array<number> | null): Array<number> | null {
         if (!valueList) {
@@ -394,6 +411,8 @@ export class Utils {
      * @param val The value.
      * @param min The min value of neutral status.
      * @param max The max value of neutral status.
+     * @param revert Reverts value status.
+     * @return value status, e.g. BAD.
      */
     static getValueStatus(val: Value, min: number, max?: number | null, revert?: boolean): ValueStatus {
         let status = ValueStatus.NEUTRAL;
